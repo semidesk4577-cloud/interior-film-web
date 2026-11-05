@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="ko">
-<head>
+<head><script>/* Supabase email links can land on the configured Site URL. Route auth callbacks only. */
+(function(){try{var h=new URLSearchParams(location.hash.slice(1));var q=new URLSearchParams(location.search);var auth=(h.has('access_token')&&h.has('refresh_token'))||h.has('error')||q.has('code')||q.has('token_hash');if(auth){var u=new URL('/admin.html',location.origin);u.search=location.search;u.hash=location.hash;location.replace(u.href);}}catch(e){}})();
+</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f4ef">
 <title>홈필름 | 주택 인테리어 필름 시공</title>
 <meta name="description" content="주택 인테리어 필름 시공. 방문, 문틀, 싱크대, 붙박이장 등 공간에 맞춘 섬세한 리폼 서비스를 소개합니다.">
