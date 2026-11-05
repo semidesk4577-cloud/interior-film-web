@@ -31,12 +31,35 @@ if(form){
     if(!values.author||!values.title||!values.body){msg.textContent='필수 항목을 입력해 주세요.';return;}
     btn.disabled=true;msg.textContent='질문을 접수하고 있습니다...';
     try{
-      const response=await fetch(new URL('/functions/v1/submit-question',cfg.supabaseUrl),{method:'POST',headers:{'Content-Type':'application/json','apikey':cfg.supabasePublishableKey},body:JSON.stringify(values)});
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),15000);
+      let response;
+      try{
+        response=await fetch(new URL('/functions/v1/submit-question',cfg.supabaseUrl),{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':cfg.supabasePublishableKey},
+          body:JSON.stringify(values),signal:controller.signal
+        });
+      }finally{clearTimeout(timeout);}
       const result=await response.json().catch(()=>({}));
-      if(!response.ok||result.success!==true)throw new Error('Submission failed');
+      if(!response.ok||result.success!==true){
+        const reason=typeof result.error==='string'?result.error:'';
+        let detail='서버 처리 오류';
+        if(response.status===401)detail='함수 JWT 인증 설정 확인 필요';
+        else if(response.status===403)detail='Turnstile 또는 접속 도메인 인증 실패';
+        else if(response.status===404)detail='submit-question 함수 주소 또는 배포 상태 확인 필요';
+        else if(response.status===400)detail='질문 입력값 검증 실패';
+        else if(response.status===503)detail='서버 환경변수 또는 인증 서비스 연결 확인 필요';
+        else if(response.status===500)detail='서버 저장 처리 실패 (함수 로그 확인 필요)';
+        throw new Error(detail+' · HTTP '+response.status+(reason?' · '+reason:''));
+      }
       form.reset();msg.textContent='질문이 접수되었습니다. 관리자 확인 후 공개됩니다.';
-    }catch(_){msg.textContent='질문이 접수되지 않았습니다. 잠시 후 다시 시도해 주세요.';}
-    finally{window.turnstile.reset(widgetId);btn.disabled=false;}
+    }catch(err){
+      const detail=err?.name==='AbortError'?'서버 응답 시간 초과':err instanceof TypeError?'서버 연결 또는 CORS 오류':String(err?.message||'알 수 없는 오류');
+      msg.textContent='질문 접수 실패: '+detail+'\n질문 내용은 유지됩니다. 원인 확인 전 반복 제출하지 마세요.';
+      console.error('HOME FILM question submit:',err);
+    }
+    finally{try{window.turnstile.reset(widgetId);}catch(_){}btn.disabled=false;}
   });
 }
 }
