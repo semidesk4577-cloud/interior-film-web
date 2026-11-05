@@ -2,7 +2,7 @@
 // 두 공개 키를 채우면 상담 신청과 관리자 로그인 UI가 활성화됩니다.
 window.HOMEFILM_CONFIG = Object.freeze({
   supabaseUrl: "https://ahwpjqtlcnvvkrrhpctl.supabase.co",
-  supabasePublishableKey: "PASTE_SUPABASE_PUBLISHABLE_KEY_HERE",
-  turnstileSiteKey: "PASTE_CLOUDFLARE_TURNSTILE_SITE_KEY_HERE",
+  supabasePublishableKey: "sb_publishable_0_HYdci54_Cep_-vja_A-g_tU9UO6O3",
+  turnstileSiteKey: "0x4AAAAAAFzKKdtY-S9SDy6-",
   functionName: "smooth-processor" // 현재 실제 배포된 함수 이름
 });
