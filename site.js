@@ -1,3 +1,9 @@
+// 상담 접수 서버가 허용하는 공식 도메인(www)으로 통일합니다.
+if (location.hostname === 'homefilm.co.kr') {
+  const target = new URL(location.href);
+  target.hostname = 'www.homefilm.co.kr';
+  location.replace(target.href);
+}
 (() => {
   'use strict';
   // Use the canonical hostname required by the deployed Edge Function.

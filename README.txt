@@ -1,0 +1,1 @@
+HOME FILM STEP13: GitHub 저장소 최상위에 config.js, site.js 두 파일만 업로드하세요. README 업로드 불필요. Supabase 프로젝트 URL 오타 수정 및 www 도메인으로 자동 이동하여 Edge Function의 허용 Origin에 맞춥니다. 서버 기능 실제 테스트는 필요합니다. 이전에 공개된 sb_secret 키는 Supabase에서 폐기하세요.
