@@ -31,9 +31,9 @@
     try {
       const response=await fetch(`${host}/functions/v1/${encodeURIComponent(cfg.functionName)}`,{method:'POST',headers:{'Content-Type':'application/json','apikey':cfg.supabasePublishableKey},body:JSON.stringify(payload)});
       const result=await response.json().catch(()=>({}));
-      if(!response.ok || result.success!==true) throw new Error(result.error || '접수 처리에 실패했습니다.');
+      if(!response.ok || result.success!==true) throw new Error((result.error || '접수 처리에 실패했습니다.') + ' (HTTP ' + response.status + ')');
       form.reset();status.textContent='상담 신청이 접수되었습니다. 확인 후 연락드리겠습니다.';
-    } catch(err) {status.textContent='접수되지 않았습니다. 잠시 후 다시 시도해 주세요.';console.error('HOME FILM inquiry:',err.message);}
+    } catch(err) {status.textContent='접수 실패: '+String(err.message||'네트워크 연결을 확인해 주세요.');console.error('HOME FILM inquiry:',err);}
     finally {window.turnstile?.reset(widgetId);btn.disabled=true;}
   });
 })();
