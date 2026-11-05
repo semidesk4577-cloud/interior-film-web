@@ -1,5 +1,10 @@
 (() => {
   'use strict';
+  // Use the canonical hostname required by the deployed Edge Function.
+  if (location.hostname === 'homefilm.co.kr') {
+    location.replace('https://www.homefilm.co.kr' + location.pathname + location.search + location.hash);
+    return;
+  }
   const cfg = window.HOMEFILM_CONFIG || {};
   const form = document.getElementById('contactForm');
   const btn = document.getElementById('submitBtn');
@@ -22,7 +27,7 @@
     const token = window.turnstile?.getResponse(widgetId);
     if (!token) {status.textContent='스팸 방지 인증을 완료해 주세요.';return;}
     btn.disabled=true;status.textContent='상담 신청을 접수하고 있습니다...';
-    const payload = {customer_name:document.getElementById("name").value.trim(), phone:document.getElementById("phone").value.trim(), location:document.getElementById("region").value.trim(), service_type:document.getElementById("service_type").value, message:document.getElementById("details").value.trim(), turnstileToken:token};
+    const payload = {customer_name:document.getElementById("name").value.trim(), phone:document.getElementById("phone").value.trim(), location:document.getElementById("region").value.trim(), service_type:document.getElementById("service_type").value, message:document.getElementById("details").value.trim(), turnstile_token:token};
     try {
       const response=await fetch(`${host}/functions/v1/${encodeURIComponent(cfg.functionName)}`,{method:'POST',headers:{'Content-Type':'application/json','apikey':cfg.supabasePublishableKey},body:JSON.stringify(payload)});
       const result=await response.json().catch(()=>({}));
