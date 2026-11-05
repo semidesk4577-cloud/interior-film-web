@@ -1,0 +1,1 @@
+HOME FILM STEP09 관리자 기능 보강\n\nGitHub interior-film-web 저장소 최상위에 admin.html, admin.js 두 파일만 덮어쓰기 업로드하세요.\nconfig.js, index.html, site.js, CNAME은 변경하지 않습니다.\n관리자 접속: https://www.homefilm.co.kr/admin.html\n관리자 인증 및 문의 조회/수정은 Supabase Auth와 RLS 정책에 의해 통제됩니다.\n실제 로그인/조회/상태 변경은 운영 환경에서 확인해야 합니다.\n
