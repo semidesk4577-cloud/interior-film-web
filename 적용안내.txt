@@ -1,1 +1,1 @@
-HOME FILM 통합 저장소 interior-film-web 최상위에 admin.html, admin-intakes.html 두 파일을 한 번에 덮어쓰기 업로드하세요. 기존 api, MySQL, Railway Variables 변경 불필요. 로그인 후 관리자 홈의 통합 관리 링크와 접수 현황 카드 확인. 기존 관리자 기능 보존.
+HOME FILM 통합 GitHub 저장소 interior-film-web 최상위에 site.js 파일을 덮어쓰기 업로드하고 Commit changes 하세요. Railway, MySQL, API, 환경변수 변경 불필요. 시공 상담 폼: 중복 제출 방지, 연락처 확인, 접수번호 표시, 인증 만료 및 실패 안내 개선. 접수번호는 서버에서 반환한 경우에만 표시합니다. 기존 디자인 유지.
