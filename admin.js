@@ -18,8 +18,8 @@ async function show(){
   const {data,error}=await db.auth.getSession();const session=data?.session;
   if(error){say('인증 상태 확인 실패: '+error.message);return;}
   if(recoveryMode){if(session){showReset();say('새 비밀번호를 설정해 주세요.');}else{showLogin();say('재설정 링크가 만료되었습니다. 새 링크를 요청해 주세요.');}return;}
-  $('resetSection').hidden=true;$('loginSection').hidden=!!session;$('dashboard').hidden=!session;
-  if(session)await refresh();
+  $('resetSection').hidden=true;$('loginSection').hidden=!!session;$('dashboard').hidden=true;
+  if(session){window.location.replace('admin-intakes.html');return;}
 }
 async function processAuthCallback(){
   const hash=new URLSearchParams(location.hash.slice(1));const query=new URLSearchParams(location.search);
