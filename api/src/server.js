@@ -41,7 +41,25 @@ async function verify(token){
   return true;
 }
 app.post('/api/intake',limiter,async(req,res)=>{const id=randomUUID();const origin=req.get('origin');if(!origin||!origins.has(origin))return res.status(403).json({ok:false,code:'ORIGIN_DENIED',requestId:id});const error=validate(req.body);if(error)return res.status(400).json({ok:false,code:error,requestId:id});try{if(!await verify(req.body.turnstile_token))return res.status(403).json({ok:false,code:'VERIFICATION_FAILED',requestId:id});const item=publicRecord(req.body);const [result]=await pool.execute('INSERT INTO intakes (id,kind,author,title,body,phone,status) VALUES (?,?,?,?,?,?,?)',[id,item.type,item.author,item.title,item.body,item.phone,'new']);return res.status(201).json({ok:true,receipt:id,release});}catch(e){console.error('intake_error',{requestId:id,code:e.code||'DB_OR_INTERNAL',message:e.code?'':e.message});return res.status(503).json({ok:false,code:e.code==='VERIFY_UNAVAILABLE'?'VERIFY_UNAVAILABLE':e.code==='CONFIG'?'SERVER_CONFIG':'SERVER_ERROR',requestId:id,release});}});
-function adminAuth(req,res,next){const expected=process.env.ADMIN_API_TOKEN;const received=(req.get('authorization')||'').replace(/^Bearer\s+/i,'');if(!expected||!received)return res.status(401).json({ok:false});const a=Buffer.from(expected),b=Buffer.from(received);if(a.length!==b.length||!timingSafeEqual(a,b))return res.status(401).json({ok:false});next();}
+async function adminAuth(req,res,next){
+ const token=(req.get('authorization')||'').match(/^Bearer\s+(.+)$/i)?.[1];
+ const base=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
+ const key=process.env.SUPABASE_PUBLISHABLE_KEY;
+ const email=(process.env.ADMIN_EMAIL||'').trim().toLowerCase();
+ if(!base||!/^https:\/\/[^/]+\.supabase\.co$/.test(base)||!key||!email){
+  return res.status(503).json({ok:false,code:'ADMIN_AUTH_NOT_CONFIGURED'});
+ }
+ if(!token)return res.status(401).json({ok:false,code:'LOGIN_REQUIRED'});
+ try{
+  const r=await fetch(base+'/auth/v1/user',{headers:{apikey:key,Authorization:'Bearer '+token},signal:AbortSignal.timeout(7000)});
+  if(!r.ok)return res.status(401).json({ok:false,code:'INVALID_SESSION'});
+  const user=await r.json();
+  if(!user?.id||!user.email_confirmed_at||String(user.email||'').toLowerCase()!==email){
+   return res.status(403).json({ok:false,code:'ADMIN_ONLY'});
+  }
+  next();
+ }catch(e){console.error('admin_auth_unavailable',e?.name||'error');res.status(503).json({ok:false,code:'AUTH_UNAVAILABLE'});}
+}
 app.get('/api/admin/intakes',adminAuth,async(req,res)=>{try{const [rows]=await pool.query('SELECT id,kind,author,title,body,phone,status,created_at FROM intakes ORDER BY created_at DESC LIMIT 100');res.json({ok:true,items:rows});}catch{res.status(503).json({ok:false});}});
 app.patch('/api/admin/intakes/:id',adminAuth,async(req,res)=>{const status=req.body?.status;if(!['new','in_progress','closed'].includes(status))return res.status(400).json({ok:false});try{const [r]=await pool.execute('UPDATE intakes SET status=? WHERE id=?',[status,req.params.id]);res.json({ok:r.affectedRows>0});}catch{res.status(503).json({ok:false});}});
 

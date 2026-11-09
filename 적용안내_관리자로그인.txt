@@ -1,0 +1,14 @@
+HOME FILM 관리자 로그인 연동 (통합 저장소용)
+
+적용 전 Railway > homefilm-api > Variables에 다음 세 값을 먼저 등록하세요.
+SUPABASE_URL = 홈페이지 config.js 의 supabaseUrl 값
+SUPABASE_PUBLISHABLE_KEY = 홈페이지 config.js 의 supabasePublishableKey 값
+ADMIN_EMAIL = 기존 Supabase 관리자 로그인 이메일(정확히 일치)
+비밀번호나 service_role/secret 키는 등록하거나 채팅에 보내지 마세요.
+
+그다음 이 ZIP을 풀어 나온 api 폴더와 HTML 파일을 interior-film-web 저장소 최상위에 폴더 구조 그대로 업로드하고 Commit 합니다.
+자동 배포 후 admin.html 로그인 -> 질문·상담 관리 클릭 -> 목록 조회/저장 확인.
+기존 ADMIN_API_TOKEN 값은 이 새 관리자 API 인증에 사용되지 않습니다. 검증 성공 후 Railway에서 제거 가능합니다.
+
+주의: 이메일 일치와 이메일 인증 완료를 서버에서 검증합니다. 기존 관리자가 이메일 인증을 마치지 않았다면 접근 거절됩니다.
+롤백: GitHub에서 이 커밋을 되돌리면 이전 토큰 방식으로 복귀합니다.
