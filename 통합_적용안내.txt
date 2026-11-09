@@ -1,0 +1,13 @@
+HOME FILM 통합 소스 (기존 두 GitHub ZIP의 파일을 손대지 않고 합친 버전)
+
+1. 이 ZIP을 풀어 내부 파일과 폴더 전체를 interior-film-web 저장소 최상위에 업로드하고 Commit 합니다.
+   api 폴더 안에는 package.json, src/server.js 등이 있습니다.
+2. Railway 기존 homefilm-api 서비스 Settings에서 Source Repository를 interior-film-web 저장소로 변경합니다.
+   Root Directory를 /api 로 설정하고, Build/Start는 기존 Node 설정을 유지하거나 Start Command를 npm start 로 설정합니다.
+   기존 서비스/도메인/환경변수/MySQL 연결을 새로 만들거나 삭제하지 마세요.
+3. Railway 배포 후 https://homefilm-api-production.up.railway.app/health 의 ok:true를 확인합니다.
+4. 기존 homefilm-api 저장소는 백업으로 유지합니다.
+
+중요: 이 ZIP은 업로드된 두 저장소의 최신 파일을 단순 통합한 것입니다.
+기존 관리자 페이지는 API 토큰 방식이며, Supabase 로그인과 Railway API 통합은 아직 구현되어 있지 않습니다.
+실제 GitHub/Railway 배포 설정 변경은 사용자가 직접 수행해야 합니다.
