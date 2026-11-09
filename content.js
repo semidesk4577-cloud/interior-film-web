@@ -4,7 +4,10 @@ const ok=/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(cfg.supabaseUrl||'')&&St
 if(!ok){msg.textContent='서비스 연결 준비 중입니다.';}else start();
 function node(tag,text){const e=document.createElement(tag);if(text!=null)e.textContent=text;return e;}
 async function start(){const db=createClient(cfg.supabaseUrl,cfg.supabasePublishableKey);const gallery=location.pathname.endsWith('gallery.html');
-async function load(){items.replaceChildren();const {data,error}=await db.from(gallery?'film_gallery':'film_questions').select(gallery?'id,title,category,description,image_path,created_at':'id,author,title,body,answer,created_at').eq('published',true).order('created_at',{ascending:false}).limit(100);if(error){msg.textContent='목록을 불러오지 못했습니다. 서버 설정을 확인해 주세요.';return;}if(!data.length){items.append(node('p','등록된 내용이 없습니다.'));return;}
+async function load(){items.replaceChildren();let data=[];
+if(gallery){const result=await db.from('film_gallery').select('id,title,category,description,image_path,created_at').eq('published',true).order('created_at',{ascending:false}).limit(100);if(result.error){msg.textContent='목록을 불러오지 못했습니다. 서버 설정을 확인해 주세요.';return;}data=result.data||[];}
+else {try{const response=await fetch('https://homefilm-api-production.up.railway.app/api/public/questions',{method:'GET',headers:{'Accept':'application/json'},cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const result=await response.json();if(result.ok!==true||!Array.isArray(result.items))throw Error('Invalid response');data=result.items;}catch(error){msg.textContent='질문 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';return;}}
+if(!data.length){items.append(node('p','등록된 내용이 없습니다.'));return;}
 for(const x of data){const card=node('article');card.className='tile';if(gallery&&x.image_path){const {data:publicUrl}=db.storage.from('film-gallery').getPublicUrl(x.image_path);const img=node('img');img.src=publicUrl.publicUrl;img.alt=x.title;img.loading='lazy';card.append(img);}card.append(node('h2',x.title));card.append(node('p',gallery?(x.category||'시공 사례')+' · '+(x.description||''):x.body));if(!gallery){card.append(node('p','작성자: '+x.author));if(x.answer){card.append(node('strong','관리자 답변'));card.append(node('p',x.answer));}else card.append(node('p','답변 대기 중'));}items.append(card);}}
 await load();
 const form=$('ask');
