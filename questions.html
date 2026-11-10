@@ -1,1 +1,39 @@
-<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>고객 질문 | HOME FILM</title><style>*{box-sizing:border-box}body{margin:0;background:#f7f4ef;color:#302b26;font:15px/1.65 system-ui,sans-serif}header{background:#332b25;color:white;padding:20px max(20px,calc((100% - 1080px)/2))}header b{font:700 25px Georgia,serif;letter-spacing:.08em}header span{margin-left:15px;color:#d8c8b6}main{max-width:1080px;margin:auto;padding:28px 20px}section,.tile{background:#fff;border:1px solid #e7dfd5;border-radius:12px;padding:22px;margin-bottom:18px}h1{font-size:26px}h2{font-size:19px;margin-top:0}input,textarea,select,button{font:inherit;padding:10px;border:1px solid #c9bbae;border-radius:7px;max-width:100%}input,textarea,select{width:100%}textarea{min-height:100px}button{background:#3e332a;color:white;cursor:pointer}button:disabled{opacity:.5}label{display:block;margin:12px 0;font-weight:600}.muted{color:#766d64;font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}.tile img{width:100%;height:190px;object-fit:cover;border-radius:8px}.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.bar>*{flex:1}#msg{white-space:pre-wrap;color:#8a4c2b}a{color:inherit} [hidden]{display:none!important}</style><header><b>HOME FILM</b><span>고객 질문</span></header><main><p><a href="/">← 홈페이지</a>　<a href="/gallery.html">시공 사례</a></p><h1>궁금한 점을 남겨주세요</h1><section><p class="muted">전화번호, 주소 등 개인정보는 질문에 적지 마세요. 질문과 관리자 답변은 공개됩니다.</p><form id="ask"><label>작성자 이름 또는 별명<input name="author" maxlength="30" required></label><label>질문 제목<input name="title" maxlength="100" required></label><label>질문 내용<textarea name="body" maxlength="2000" required></textarea></label><div id="questionTurnstile" aria-label="스팸 방지 인증"></div><button type="submit">질문 등록</button></form><p id="msg" role="status"></p></section><h2>질문과 답변</h2><div id="items"></div></main><script src="config.js"></script><script type="module" src="content.js"></script></html>
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>고객 질문 | HOME FILM</title><style>*{box-sizing:border-box}body{margin:0;background:#f7f4ef;color:#302b26;font:15px/1.65 system-ui,sans-serif}header{background:#332b25;color:white;padding:20px max(20px,calc((100% - 1080px)/2))}header b{font:700 25px Georgia,serif;letter-spacing:.08em}header span{margin-left:15px;color:#d8c8b6}main{max-width:1080px;margin:auto;padding:28px 20px}section,.tile{background:#fff;border:1px solid #e7dfd5;border-radius:12px;padding:22px;margin-bottom:18px}h1{font-size:26px}h2{font-size:19px;margin-top:0}input,textarea,select,button{font:inherit;padding:10px;border:1px solid #c9bbae;border-radius:7px;max-width:100%}input,textarea,select{width:100%}textarea{min-height:100px}button{background:#3e332a;color:white;cursor:pointer}button:disabled{opacity:.5}label{display:block;margin:12px 0;font-weight:600}.muted{color:#766d64;font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}.tile img{width:100%;height:190px;object-fit:cover;border-radius:8px}.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.bar>*{flex:1}#msg{white-space:pre-wrap;color:#8a4c2b}a{color:inherit} [hidden]{display:none!important}
+/* STEP31 - customer questions: coordinated neutral-gray, larger typography */
+:root{--dark:#303842;--slate:#485562;--line:#dce2e8;--light:#f2f4f6;--muted:#6d7783}
+body{background:#f2f4f6;color:#29313b;font:16px/1.7 system-ui,'Noto Sans KR',sans-serif}
+header{background:#303842;padding:0 24px;color:#fff;box-shadow:0 2px 12px #27313c1a}
+.head-inner{max-width:1100px;min-height:76px;margin:auto;display:flex;align-items:center;gap:14px}
+header b{font-size:25px;white-space:nowrap}
+header span{color:#cbd2da;font-size:13px;margin-left:0}
+header nav{margin-left:auto;display:flex;gap:8px}
+header nav a{color:#eaf0f5;text-decoration:none;padding:9px 12px;border-radius:9px;font-size:13px}
+header nav a:hover{background:#ffffff20}
+main{max-width:1100px;padding:40px 20px 80px}
+.page-intro{margin-bottom:26px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;color:#73808d}
+.page-intro h1{font-size:34px;letter-spacing:-.05em;margin:7px 0}
+.page-intro p{color:#65717e;margin:0;font-size:15px}
+section{background:#fff;border:1px solid #dce2e8;border-radius:18px;padding:30px 34px;margin-bottom:25px;box-shadow:0 8px 26px #2e3b4b0c}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+.section-head h2{font-size:24px;letter-spacing:-.04em;margin:4px 0}
+.step-pill{border-radius:100px;background:#edf1f5;color:#4b5967;padding:8px 14px;font-size:12px;font-weight:700;white-space:nowrap}
+.notice{border:1px solid #dfe6ed;border-radius:10px;padding:15px 18px;background:#f5f7f9;color:#647180;font-size:13px;margin:0 0 22px}
+#ask{display:grid;grid-template-columns:1fr 1fr;gap:2px 18px}
+#ask label{margin:8px 0 13px;font-weight:700;color:#45515e;font-size:14px}
+#ask label:nth-child(3),#questionTurnstile,.submit-btn{grid-column:1/-1}
+#ask input,#ask textarea{margin-top:8px;background:#fbfcfd;border:1px solid #cbd4de;border-radius:10px;padding:13px 15px;font-size:15px;color:#29313b}
+#ask textarea{min-height:140px}
+#ask input:focus,#ask textarea:focus{outline:2px solid #9aa7b5;outline-offset:1px}
+#questionTurnstile{margin:12px 0 8px;max-width:100%;overflow:auto}
+.submit-btn{background:#485562;color:#fff;border-color:#485562;border-radius:10px;min-height:50px;font-weight:800;font-size:15px;padding:13px 22px;justify-self:start}
+.submit-btn:hover{background:#303842}
+#msg{color:#4b6378;font-weight:650;margin-top:13px}
+.answers-section{margin-top:8px}.answers-caption{color:#74808d;margin:0 0 20px;font-size:14px}
+#items{display:grid;gap:13px}
+#items .tile{background:#fafbfc;border:1px solid #dce2e8;border-radius:13px;padding:21px;margin:0;box-shadow:none}
+#items .tile:hover{border-color:#b8c4cf}
+#items h3{font-size:18px;margin:0 0 8px}
+#items .muted{color:#72808d}
+@media(max-width:650px){header{padding:0 13px}.head-inner{flex-wrap:wrap;padding:12px 0;gap:5px}header nav{width:100%;margin-left:0}header nav a{padding:4px 8px}main{padding:26px 12px 60px}.page-intro h1{font-size:26px}section{padding:19px 16px}.section-head h2{font-size:21px}.step-pill{font-size:10px;padding:7px 9px}#ask{grid-template-columns:1fr}#ask label:nth-child(3),#questionTurnstile,.submit-btn{grid-column:1}.submit-btn{width:100%}}
+</style><header><div class="head-inner"><b>HOME FILM</b><span>고객 질문 · Q&A</span><nav><a href="/">홈페이지</a><a href="/gallery.html">시공 사례</a></nav></div></header><main><div class="page-intro"><div class="eyebrow">CUSTOMER Q&A</div><h1>궁금한 점을 편하게 남겨주세요</h1><p>시공 방법부터 비용과 일정까지, 궁금한 내용을 남겨주시면 확인 후 답변드리겠습니다.</p></div><section class="question-form"><div class="section-head"><div><div class="eyebrow">ASK A QUESTION</div><h2>질문 작성</h2></div><span class="step-pill">01 · 질문 등록</span></div><p class="notice">개인정보 보호를 위해 전화번호·주소는 입력하지 마세요. 승인된 질문과 관리자 답변은 홈페이지에 공개됩니다.</p><form id="ask"><label>작성자 이름 또는 별명<input name="author" maxlength="30" required></label><label>질문 제목<input name="title" maxlength="100" required></label><label>질문 내용<textarea name="body" maxlength="2000" required></textarea></label><div id="questionTurnstile" aria-label="스팸 방지 인증"></div><button class="submit-btn" type="submit">질문 등록하기 <span aria-hidden="true">→</span></button></form><p id="msg" role="status"></p></section><section class="answers-section"><div class="section-head"><div><div class="eyebrow">QUESTIONS & ANSWERS</div><h2>질문과 답변</h2></div><span class="step-pill">02 · 답변 확인</span></div><p class="answers-caption">등록된 질문과 관리자의 답변을 확인하세요.</p><div id="items"></div></section></main><script src="config.js"></script><script type="module" src="content.js"></script></html>
