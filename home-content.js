@@ -12,7 +12,11 @@ const {data,error}=await db.from('home_content').select('section,position,title,
 if(error)throw error;
 const rows=data||[];
 const single=(key)=>rows.find(r=>r.section===key);
-let x=single('hero');if(x){apply($('.hero h1'),x.title);apply($('.hero-content p'),x.body);photo($('.hero'),x.image_url);if(x.image_url){document.documentElement.style.setProperty('--home-hero-image',`url("${x.image_url}")`);}}
+let x=single('hero');if(x){
+ const heroRows=rows.filter(r=>r.section==='hero').sort((a,b)=>a.position-b.position);
+ window.dispatchEvent(new CustomEvent('homefilm:hero-content',{detail:heroRows}));
+ // The hero-carousel script owns banner text and image transitions.
+}
 x=single('about');if(x){apply($('.about h2'),x.title);apply($('.about p'),x.body);photo($('.about-image'),x.image_url);}
 const cards=(section,track,cls,headerTag)=>{
  const found=rows.filter(r=>r.section===section);

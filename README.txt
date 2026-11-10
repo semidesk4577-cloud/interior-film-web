@@ -1,8 +1,7 @@
-HOME FILM STEP37 - SERVICE + GALLERY AUTOROLL
+HOME FILM STEP38 - HERO BANNER ROTATION + ADMIN MULTI-BANNER
 
-Upload all 3 files together to root of interior-film-web GitHub repository.
-- Services: auto roll LEFT to RIGHT every 3.5 seconds, manual arrows, infinite loop.
-- Gallery: retains auto roll RIGHT to LEFT every 3.5 seconds, manual arrows.
-- Existing images and dynamic Supabase entries are retained.
-- Pauses when mouse hovered, keyboard focus, tab hidden or reduced-motion setting.
-No Railway/MySQL/Supabase changes.
+Upload all 6 files in this ZIP together to the ROOT of interior-film-web repository, then Commit.
+Files: index.html, hero-carousel.js, home-content.js, home-content-admin.js, home-content-admin.html, service-carousel.js, gallery-carousel.js (7 files).
+In home-content-admin.html choose Main Banner, click New Item, set display order 2 or higher, add image and title/body, save.
+Multiple published hero banners automatically rotate every 5 seconds (next banner enters via fade), with previous/next/pause controls. If only one banner exists it stays static.
+No database schema changes; no Railway changes. Existing content and other sliders are retained.

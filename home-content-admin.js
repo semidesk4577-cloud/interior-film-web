@@ -52,7 +52,7 @@ $('form').addEventListener('submit',async e=>{
  const btn=$('save');btn.disabled=true;
  try{
   const section=$('section').value;
-  if(['hero','about'].includes(section)&&!current&&rows.some(r=>r.section===section))throw Error('메인 배너와 브랜드 소개는 각 1개만 등록할 수 있습니다. 기존 항목을 선택해 수정하세요.');
+  if(section==='about'&&!current&&rows.some(r=>r.section==='about'))throw Error('브랜드 소개는 1개만 등록할 수 있습니다. 기존 항목을 선택해 수정하세요.');
   let image_url=$('imageUrl').value.trim();
   if(!imgOk(image_url))throw Error('이미지 주소는 https:// 로 시작해야 합니다.');
   const file=$('imageFile').files[0];
