@@ -1,4 +1,4 @@
-/* HOME FILM STEP45: use the EXISTING .hero::before background on all screens.
+/* HOME FILM STEP46: use the EXISTING .hero::before background on all screens.
    Avoid separate overlay layers and Image.onload gating. Public Supabase data only. */
 (()=>{'use strict';
 const hero=document.querySelector('.hero');if(!hero)return;
@@ -39,10 +39,10 @@ async function refresh(){
  loading=true;
  try{
   const url=base+'/rest/v1/home_content?select=section,position,title,body,image_url,published&section=eq.hero&published=eq.true&order=position.asc';
-  const res=await fetch(url,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'});
+  const res=await fetch(url,{headers:{apikey:key,Accept:'application/json'},cache:'no-store'});
   if(!res.ok)throw Error('HTTP '+res.status);
   setRows(await res.json());
- }catch(e){console.warn('[HOME FILM STEP45] 배너 목록 조회 실패:',e.message);}
+ }catch(e){console.warn('[HOME FILM STEP46] 배너 목록 조회 실패:',e.message);}
  finally{loading=false;}
 }
 // Existing buttons remain hidden; preserve optional functionality.
