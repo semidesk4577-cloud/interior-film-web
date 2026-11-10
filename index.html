@@ -74,6 +74,14 @@
 /* STEP06: unified member area; original site layout remains unchanged */
 .hf-member-panel{max-width:760px;margin:0 auto;background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,36px);box-shadow:0 12px 35px #2927220a}
 .hf-member-panel [hidden],.navlinks [hidden]{display:none!important}.hf-member-tabs{display:flex;gap:8px;margin-bottom:20px}.hf-member-tabs button{flex:1;padding:12px;border:1px solid var(--line);background:var(--cream);border-radius:8px}.hf-member-tabs .hf-active{background:#332e28;color:white}.hf-member-form{display:grid;gap:10px}.hf-member-form input:not([type=checkbox]){width:100%;padding:12px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#292722}.hf-member-form .btn{margin-top:12px}.hf-link-button{background:transparent;border:0;text-decoration:underline;text-align:left;color:var(--accent);padding:8px 0}.hf-consent{font-size:13px}.hf-member-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.hf-member-top p{overflow-wrap:anywhere}.hf-member-panel .hf-question{padding:16px;border:1px solid var(--line);border-radius:9px;margin:10px 0}.hf-member-panel .hf-question h4{margin:0 0 8px}.hf-member-panel .hf-question p{margin:7px 0;white-space:pre-wrap;overflow-wrap:anywhere}.hf-member-panel .hf-answer{background:var(--cream);padding:12px;border-radius:7px}.hf-member-panel #hfMemberStatus{font-size:14px;color:#675543}
+
+/* STEP07: signed-in member area immediately below site header */
+.hf-member-at-top{padding:26px 0 30px!important;scroll-margin-top:82px}
+.hf-member-at-top .section-heading{margin-bottom:14px}
+.hf-member-at-top .section-heading h2{font-size:clamp(23px,3vw,32px);margin:4px 0 0}
+.hf-member-at-top .hf-member-panel{max-width:1160px;padding:20px 26px}
+.hf-member-at-top .hf-member-panel #hfMemberStatus{margin:0 0 8px}
+@media(max-width:680px){.hf-member-at-top{padding:16px 0 22px!important}.hf-member-at-top .hf-member-panel{padding:16px}.hf-member-at-top .section-heading{display:block}}
 </style>
 </head>
 <body>
@@ -126,5 +134,5 @@ const toggle=document.getElementById('menuToggle'),links=document.getElementById
 <script src="gallery-carousel.js" defer></script>
 <script src="hero-carousel.js?v=step48-20261110" defer></script>
 <script type="module" src="home-content.js?v=step47-20261110"></script>
-<script type="module" src="member-hub.js?v=step06-20261110"></script>
+<script type="module" src="member-hub.js?v=step07-20261110"></script>
 </body></html>
