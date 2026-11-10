@@ -1,0 +1,23 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HOME FILM | 홈페이지 콘텐츠 관리</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f4f6;color:#29313b;font:15px/1.6 system-ui,"Noto Sans KR",sans-serif}a{color:inherit;text-decoration:none}
+header{background:#303842;color:white;padding:18px 25px;display:flex;justify-content:space-between;gap:15px;align-items:center}header strong{font:700 24px Georgia,serif}
+.layout{display:grid;grid-template-columns:225px minmax(0,1fr);min-height:calc(100vh - 67px)}aside{background:#39434f;color:#e7edf3;padding:24px 14px}aside a{display:block;padding:13px;border-radius:9px;margin:4px 0}aside a.active{background:#e5e9ee;color:#303842}main{padding:30px;max-width:1250px;width:100%;margin:auto}
+h1{font-size:28px;margin:0 0 7px}h2{font-size:20px;margin:0 0 12px}.muted{color:#6d7783;font-size:13px}
+.panel{background:white;border:1px solid #dce2e8;border-radius:15px;padding:25px;margin:20px 0;box-shadow:0 6px 22px #26313b0a}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}label{display:block;font-weight:650;font-size:13px;margin:10px 0}
+input,textarea,select{display:block;width:100%;border:1px solid #cbd4de;background:#fbfcfd;padding:11px;border-radius:9px;font:inherit;margin-top:6px}textarea{min-height:90px;resize:vertical}
+button{background:#485562;border:1px solid #485562;color:white;padding:11px 16px;border-radius:9px;font-weight:700;cursor:pointer}button:disabled{opacity:.5;cursor:wait}button.secondary{background:white;color:#39434f;border-color:#cbd4de}
+.entry{background:#f8fafc;border:1px solid #dce2e8;border-radius:12px;padding:18px;margin:14px 0}
+.entry img{width:150px;max-width:100%;height:100px;object-fit:cover;border-radius:9px;background:#e5e9ee}
+.entry-head{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.entry-head strong{flex:1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+#msg{padding:12px 15px;background:#e8eef4;color:#3e566c;border-radius:9px;white-space:pre-wrap}
+#editor[hidden],#manager[hidden]{display:none}.tag{font-size:12px;background:#e7edf3;border-radius:30px;padding:5px 10px}
+@media(max-width:750px){.layout{display:block}aside{display:flex;overflow-x:auto;gap:6px;padding:10px}aside a{white-space:nowrap;font-size:12px}main{padding:20px 13px}.grid{grid-template-columns:1fr}.panel{padding:17px}}
+</style></head><body><header><strong>HOME FILM</strong><span>홈페이지 이미지 · 문구 관리</span></header><div class="layout"><aside>
+<a href="admin.html">관리자 홈</a><a href="admin-intakes.html">고객 접수 관리</a><a href="content-admin.html">시공 사진 관리</a><a class="active" href="home-content-admin.html">홈페이지 이미지·문구 관리</a><a href="index.html">홈페이지 보기</a>
+</aside><main><h1>홈페이지 이미지 · 문구 관리</h1><p class="muted">메인 배너, 브랜드 소개, 시공 서비스, 시공 갤러리를 이곳에서 수정합니다. 기존 사진은 변경하기 전까지 그대로 표시됩니다.</p><p id="msg" role="status">관리자 권한 확인 중…</p>
+<div id="manager" hidden><section class="panel"><h2>관리 영역</h2><div class="grid"><label>관리할 위치<select id="section"><option value="hero">메인 배너</option><option value="about">브랜드 소개</option><option value="service">시공 서비스 카드</option><option value="work">시공 갤러리 카드</option></select></label><label>항목 선택<select id="entry"><option value="">새 항목</option></select></label></div><div class="actions"><button id="new" type="button" class="secondary">새 항목 추가</button><button id="reload" type="button" class="secondary">목록 새로고침</button></div></section>
+<section class="panel" id="editor"><h2>이미지 · 문구 편집</h2><form id="form"><div class="grid"><label>제목<input id="title" maxlength="180" required></label><label>표시 순서<input id="position" type="number" min="1" max="999" value="1" required></label></div><label>설명<textarea id="body" maxlength="1500"></textarea></label><label>이미지 주소 (기존 이미지 재사용 가능)<input id="imageUrl" type="url" placeholder="https://..."></label><label>또는 새 이미지 업로드 (JPEG/PNG/WEBP, 5MB 이하)<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"></label><p class="muted">새 파일을 선택하면 기존 이미지 대신 업로드한 이미지가 사용됩니다. 파일을 선택하지 않으면 현재 주소를 유지합니다.</p><label><input id="published" type="checkbox" checked style="display:inline;width:auto;margin-right:8px">홈페이지 공개</label><div class="actions"><button type="submit" id="save">저장</button><button type="button" id="remove" class="secondary">선택 항목 삭제</button></div></form></section>
+<section class="panel"><h2>등록된 항목</h2><div id="items"></div></section></div></main></div>
+<script src="config.js"></script><script type="module" src="home-content-admin.js"></script></body></html>

@@ -26,6 +26,8 @@
 @media(max-width:900px){.service-carousel .service-card{flex-basis:calc((100% - 20px)/2)}}
 @media(max-width:680px){.service-carousel{margin:0 22px}.service-carousel .service-card{flex-basis:86%}.service-carousel .service-arrow{width:32px;height:48px;font-size:30px}.service-carousel .service-prev{left:-35px}.service-carousel .service-next{right:-35px}}
 @media(prefers-reduced-motion:reduce){.service-carousel .service-grid{scroll-behavior:auto}}
+.hero::before{background-image:linear-gradient(90deg,rgba(26,23,20,.72),rgba(35,31,27,.4) 52%,rgba(35,31,27,.05)),var(--home-hero-image,url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85"))!important}
+@media(max-width:680px){.hero::before{background-image:linear-gradient(90deg,rgba(26,23,20,.75),rgba(35,31,27,.26)),var(--home-hero-image,url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"))!important}}
 </style>
 </head>
 <body>
@@ -83,4 +85,5 @@ requestAnimationFrame(update);
 </script>
 <script src="config.js"></script>
 <script src="site.js" defer></script>
+<script type="module" src="home-content.js"></script>
 </body></html>
