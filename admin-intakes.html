@@ -8,7 +8,7 @@ body{background:#f6f1ec;color:var(--ink);font-size:15px}
 .top{height:74px;padding:14px 32px;background:linear-gradient(100deg,#414b57,#414b57);box-shadow:0 2px 12px #414b57}
 .top .brand{font-size:25px;letter-spacing:.035em}.top small{font-size:12px;color:#dce2e8}
 .top-nav a{border-radius:10px;padding:9px 12px}.top-nav a:hover{background:#ffffff1a}
-.app-shell{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:calc(100vh - 74px)}
+.app-shell{display:grid;grid-template-columns:226px minmax(0,1fr);min-height:calc(100vh - 74px)}
 .sidebar{background:linear-gradient(165deg,#414b57,#414b57);color:#fff;display:flex;flex-direction:column;padding:27px 15px;gap:25px}
 .sidebar-brand{padding:10px 14px 22px;border-bottom:1px solid #ffffff26;display:flex;flex-direction:column;gap:3px}
 .sidebar-brand strong{font:700 24px Georgia,serif;letter-spacing:.025em}.sidebar-brand small{font-size:11px;color:#b6bec7}
@@ -147,12 +147,23 @@ button[type="submit"]:hover,.btn.primary:hover,.save-button:hover,#logout:hover,
 .ticket-body .save-button{min-width:120px}
 .toolbar{gap:14px!important}
 @media(max-width:650px){.panel{padding:18px 13px!important}.ticket-summary{padding:16px 12px!important}.ticket-body{padding:16px!important}.stat-card{min-height:90px!important;padding:13px!important}.stat-number{font-size:27px!important}}
+
+/* STEP32 consistent grouped administrator navigation */
+.hf-side{background:#39434f!important;background-image:none!important;color:#edf1f5!important;width:226px;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;padding:22px 13px!important;gap:14px!important;border:0!important;border-right:1px solid #2b3540!important}
+.hf-side-brand{padding:9px 12px 20px;border-bottom:1px solid #ffffff26;display:flex;flex-direction:column;gap:2px}
+.hf-side-brand strong{font:700 23px Georgia,serif;letter-spacing:.035em;color:#fff}
+.hf-side-brand small{font-size:10px;color:#cbd4df;letter-spacing:.1em}
+.hf-nav-group{padding-top:8px}.hf-nav-title{font-size:11px;letter-spacing:.08em;font-weight:800;color:#b6c2ce;padding:0 12px 8px}
+.hf-nav{display:flex;flex-direction:column;gap:5px}
+.hf-side .hf-nav a{display:flex!important;align-items:center;gap:10px;min-height:43px;box-sizing:border-box;padding:10px 11px!important;border-radius:9px!important;text-decoration:none!important;color:#e7edf3!important;font-size:13px!important;font-weight:600!important;background:transparent!important;white-space:nowrap}
+.hf-side .hf-nav a:hover{background:#566372!important;color:#fff!important}
+.hf-side .hf-nav a.is-current,.hf-side .hf-nav a.is-current:hover{background:#e5e9ee!important;color:#303842!important;font-weight:800!important}
+.hf-nav-icon{width:20px;flex:0 0 20px;display:inline-flex;align-items:center;justify-content:center;font-size:17px}
+.hf-side-footer{margin-top:auto;border-top:1px solid #ffffff1d;padding:16px 12px 3px;font-size:10px;color:#acb9c5;letter-spacing:.06em}
+@media(max-width:900px){.hf-side{width:100%;padding:10px!important;gap:7px!important;border-right:0!important}.hf-side-brand,.hf-side-footer{display:none!important}.hf-nav-group{padding:0}.hf-nav-title{display:none}.hf-nav{flex-direction:row;overflow-x:auto;gap:4px}.hf-side .hf-nav a{padding:9px 11px!important;min-height:38px;font-size:12px!important}.hf-nav-icon{font-size:14px;width:16px;flex-basis:16px}}
 </style></head><body>
-<header class="top"><div><div class="brand">HOME FILM</div><small>ADMIN CONSOLE</small></div><nav class="top-nav"><a href="admin.html">관리자 홈</a><a href="content-admin.html">시공 사진</a><a href="index.html">홈페이지</a></nav></header>
-<div class="app-shell"><aside class="sidebar" aria-label="관리자 메뉴">
-<div class="sidebar-brand"><span class="house-mark">⌂</span><strong>HOME FILM</strong><small>인테리어 필름 시공 관리</small></div>
-<nav class="side-links"><a href="admin.html">⌂ <span>관리자 홈</span></a><a class="selected" href="admin-intakes.html">▤ <span>고객 접수 관리</span></a><a href="content-admin.html">▧ <span>시공 사진 관리</span></a><a href="index.html">↗ <span>홈페이지 보기</span></a></nav>
-<div class="sidebar-foot">HOME FILM · ADMIN</div></aside><div class="layout"><div class="heading"><div><div class="eyebrow">HOME FILM ADMIN DASHBOARD</div><h1>고객 접수 관리 <span class="title-dot">●</span></h1><p class="muted">질문과 시공 상담을 한눈에 확인하고 처리하세요.</p></div><div class="actions"><button class="btn" id="load" type="button">↻ 새로고침</button><button class="btn" id="logout" type="button">로그아웃</button></div></div>
+<header class="top"><div><div class="brand">HOME FILM</div><small>ADMIN CONSOLE</small></div></header>
+<div class="app-shell"><aside class="hf-side" aria-label="관리자 메뉴"><div class="hf-side-brand"><strong>HOME FILM</strong><small>ADMIN CONSOLE</small></div><div class="hf-nav-group"><div class="hf-nav-title">관리 업무</div><nav class="hf-nav"><a href="admin.html"><span class="hf-nav-icon" aria-hidden="true">⌂</span><span>관리자 홈</span></a><a href="admin-intakes.html" class="is-current" aria-current="page"><span class="hf-nav-icon" aria-hidden="true">▤</span><span>고객 접수 관리</span></a><a href="content-admin.html"><span class="hf-nav-icon" aria-hidden="true">▧</span><span>시공 사진 관리</span></a></nav></div><div class="hf-nav-group"><div class="hf-nav-title">홈페이지 확인</div><nav class="hf-nav"><a href="gallery.html"><span class="hf-nav-icon" aria-hidden="true">▦</span><span>시공 사례 보기</span></a><a href="questions.html"><span class="hf-nav-icon" aria-hidden="true">?</span><span>고객 질문 보기</span></a><a href="index.html"><span class="hf-nav-icon" aria-hidden="true">↗</span><span>홈페이지 보기</span></a></nav></div><div class="hf-side-footer">HOME FILM · MANAGEMENT</div></aside><div class="layout"><div class="heading"><div><div class="eyebrow">HOME FILM ADMIN DASHBOARD</div><h1>고객 접수 관리 <span class="title-dot">●</span></h1><p class="muted">질문과 시공 상담을 한눈에 확인하고 처리하세요.</p></div><div class="actions"><button class="btn" id="load" type="button">↻ 새로고침</button><button class="btn" id="logout" type="button">로그아웃</button></div></div>
 <p id="status" role="status" aria-live="polite"></p><div class="stat-grid" id="summary" aria-label="접수 현황"></div>
 <section class="panel"><div class="panel-header"><div><div class="eyebrow">INQUIRY MANAGEMENT</div><h2>최근 고객 문의 목록</h2><p class="muted">고객을 선택하면 상세 내용과 답변 관리가 펼쳐집니다.</p></div><button class="btn" id="export" type="button">CSV 다운로드</button></div>
 <div class="category-tabs" role="group" aria-label="접수 종류 빠른 선택"><button type="button" class="tab active" data-kind="all">전체 접수 <span id="tab-all">0</span></button><button type="button" class="tab" data-kind="question">일반 질문 <span id="tab-question">0</span></button><button type="button" class="tab" data-kind="consultation">시공 상담 <span id="tab-consultation">0</span></button></div>
