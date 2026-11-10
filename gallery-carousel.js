@@ -17,6 +17,16 @@ function rebuild(){
  if(ignoreMutations)return;
  ignoreMutations=true;observer.disconnect();
  restore();originals=Array.from(track.children).filter(e=>e.classList.contains('work-card'));
+ // The original stylesheet gives pictures only to :nth-child(1..3).
+ // The carousel inserts clones before those cards, shifting the indices.
+ // Freeze each card's actual image as inline style BEFORE inserting clones.
+ // This also preserves the image chosen in the admin content database.
+ originals.forEach((card,i)=>{
+   const photo=card.querySelector('.photo');
+   if(!photo)return;
+   const bg=getComputedStyle(photo).backgroundImage;
+   if(bg && bg!=='none')photo.style.backgroundImage=bg;
+ });
  if(!originals.length){prev.disabled=next.disabled=true;ignoreMutations=false;observer.observe(track,{childList:true});return;}
  const before=document.createDocumentFragment(),after=document.createDocumentFragment();
  for(const card of originals){before.append(clone(card));after.append(clone(card));}
