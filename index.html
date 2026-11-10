@@ -28,6 +28,20 @@
 @media(prefers-reduced-motion:reduce){.service-carousel .service-grid{scroll-behavior:auto}}
 .hero::before{background-image:linear-gradient(90deg,rgba(26,23,20,.72),rgba(35,31,27,.4) 52%,rgba(35,31,27,.05)),var(--home-hero-image,url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85"))!important}
 @media(max-width:680px){.hero::before{background-image:linear-gradient(90deg,rgba(26,23,20,.75),rgba(35,31,27,.26)),var(--home-hero-image,url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"))!important}}
+
+/* STEP36: gallery carousel - 3 cards on desktop, seamless right-to-left autoplay */
+.gallery-carousel{position:relative;margin:0 0 8px}
+.gallery-carousel .works-grid{display:flex!important;gap:18px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:none;scrollbar-width:none;overscroll-behavior-x:contain;padding:0 0 4px}
+.gallery-carousel .works-grid::-webkit-scrollbar{display:none}
+.gallery-carousel .work-card{flex:0 0 calc((100% - 36px)/3);min-width:0;margin:0}
+.gallery-arrow{position:absolute;top:43%;transform:translateY(-50%);z-index:4;width:47px;height:59px;display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1;color:#485562;background:#fff;border:1px solid #dce2e8;border-radius:11px;box-shadow:0 4px 18px #0002;cursor:pointer}
+.gallery-prev{left:-60px}.gallery-next{right:-60px}
+.gallery-arrow:hover{background:#f2f4f6}.gallery-arrow:focus-visible{outline:3px solid #778da2;outline-offset:2px}
+.gallery-guide{font-size:12px;color:#6d7783;text-align:right;margin:8px 0 0}
+@media(max-width:1200px){.gallery-carousel{margin:0 44px}.gallery-prev{left:-54px}.gallery-next{right:-54px}}
+@media(max-width:850px){.gallery-carousel .work-card{flex-basis:calc((100% - 18px)/2)}}
+@media(max-width:600px){.gallery-carousel{margin:0 28px}.gallery-carousel .work-card{flex-basis:90%}.gallery-arrow{width:33px;height:46px;font-size:32px}.gallery-prev{left:-37px}.gallery-next{right:-37px}}
+@media(prefers-reduced-motion:reduce){.gallery-carousel .works-grid{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -41,7 +55,12 @@
 <button class="service-arrow service-next" type="button" aria-label="다음 시공 서비스">›</button>
 </div><p class="service-hint" id="serviceHint" aria-live="polite">시공 항목을 좌우로 넘겨 확인하세요.</p></div></section>
 <section class="section about" id="about"><div class="container about-grid"><div><span class="eyebrow">OUR PHILOSOPHY</span><h2>좋은 변화는<br>섬세한 손끝에서<br>시작됩니다.</h2><p>무조건 새것으로 바꾸기보다, 지금의 공간을 더 오래 아끼는 방법을 고민합니다. 생활의 동선과 기존 가구의 상태를 살피고 적합한 시공 방법을 안내하겠습니다.</p><ul class="ticks"><li>방문 전 사진을 통한 작업 범위 상담</li><li>시공 부위와 표면 상태에 따른 안내</li><li>가까운 지역의 소규모 시공부터 운영 예정</li></ul><a href="#contact" class="btn light">시공 상담하기 ↗</a></div><div class="about-image" role="img" aria-label="따뜻한 톤의 주택 인테리어 참고 사진"></div></div></section>
-<section class="section" id="works"><div class="container"><div class="section-heading"><div><span class="eyebrow">PORTFOLIO</span><h2>시공 갤러리</h2></div><p>실제 시공 사례가 준비되면 전후 사진과 작업 내용을 이곳에 등록합니다.</p></div><div id="sampleWorks" class="works-grid"><article class="work-card"><div class="photo" role="img" aria-label="주방 인테리어 참고 이미지"></div><div class="copy"><strong>주방 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article><article class="work-card"><div class="photo" role="img" aria-label="방문 인테리어 참고 이미지"></div><div class="copy"><strong>방문 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article><article class="work-card"><div class="photo" role="img" aria-label="수납장 인테리어 참고 이미지"></div><div class="copy"><strong>수납장 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article></div><p class="notice" id="sampleNotice">※ 현재 사진은 디자인 시연용 참고 이미지입니다. 실제 시공 실적이나 시공 전후 사진이 아닙니다.</p></div></section>
+<section class="section" id="works"><div class="container"><div class="section-heading"><div><span class="eyebrow">PORTFOLIO</span><h2>시공 갤러리</h2></div><p>실제 시공 사례가 준비되면 전후 사진과 작업 내용을 이곳에 등록합니다.</p></div><div class="gallery-carousel" aria-label="시공 갤러리 슬라이드">
+<button type="button" class="gallery-arrow gallery-prev" aria-label="이전 갤러리 사진">‹</button>
+<div id="sampleWorks" class="works-grid" tabindex="0"><article class="work-card"><div class="photo" role="img" aria-label="주방 인테리어 참고 이미지"></div><div class="copy"><strong>주방 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article><article class="work-card"><div class="photo" role="img" aria-label="방문 인테리어 참고 이미지"></div><div class="copy"><strong>방문 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article><article class="work-card"><div class="photo" role="img" aria-label="수납장 인테리어 참고 이미지"></div><div class="copy"><strong>수납장 리폼 참고</strong><p>실제 시공 사례 등록 예정</p></div></article></div>
+<button type="button" class="gallery-arrow gallery-next" aria-label="다음 갤러리 사진">›</button>
+</div><p class="gallery-guide">자동으로 오른쪽에서 왼쪽으로 이동합니다. 마우스를 올리면 일시 정지됩니다.</p>
+<p class="notice" id="sampleNotice">※ 현재 사진은 디자인 시연용 참고 이미지입니다. 실제 시공 실적이나 시공 전후 사진이 아닙니다.</p></div></section>
 <section class="section" id="process" style="background:#fff"><div class="container"><div class="section-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>간단한 상담부터<br>시공까지</h2></div></div><div class="steps"><div class="step"><b>01</b><h3>사진 문의</h3><p>시공할 부분의 사진과 위치를 알려주세요.</p></div><div class="step"><b>02</b><h3>작업 범위 확인</h3><p>표면 상태와 크기를 확인해 상담합니다.</p></div><div class="step"><b>03</b><h3>일정 조율</h3><p>작업 가능 여부와 방문 일정을 협의합니다.</p></div><div class="step"><b>04</b><h3>시공 진행</h3><p>협의된 범위에 따라 시공을 진행합니다.</p></div></div></div></section>
 <section class="section contact" id="contact"><div class="container contact-grid"><div><span class="eyebrow">CONTACT US</span><h2>우리 집, 어디부터<br>바꾸면 좋을까요?</h2><p>방문, 싱크대, 신발장 등 바꾸고 싶은 부분을 알려주세요. 사진과 함께 문의하시면 작업 범위를 파악하는 데 도움이 됩니다.</p><p style="font-size:13px">시공 가능 지역과 일정은 상담 후 안내드립니다.</p></div><div class="contact-panel"><form id="contactForm">
 <label for="name">성함 *</label><input id="name" name="name" autocomplete="name" placeholder="성함을 입력해주세요" required minlength="2" maxlength="60">
@@ -85,5 +104,6 @@ requestAnimationFrame(update);
 </script>
 <script src="config.js"></script>
 <script src="site.js" defer></script>
+<script src="gallery-carousel.js" defer></script>
 <script type="module" src="home-content.js"></script>
 </body></html>
