@@ -1,14 +1,9 @@
-HOME FILM 회원 인증 STEP01 - 독립 화면 / 기존 파일 변경 없음
+HOME FILM 회원 관리: Supabase 대시보드 대신 관리자 페이지에서 회원 목록 조회
 
-파일: signup.html, login.html, mypage.html, member.js, member.css
+1. GitHub 저장소 루트: admin-members.html, admin-members.js, admin-intakes.html 업로드.
+2. Railway API 프로젝트의 api/src/server.js 를 동봉 파일로 교체 후 배포. 반드시 현재 Railway 소스와 비교하여 기존 신규 기능을 보존하세요. 이 서버 파일은 사용자가 제공한 2026-11-10 전체 ZIP 기준입니다.
+3. Railway 환경변수 SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, ADMIN_EMAIL(기존값) 외에 SUPABASE_SERVICE_ROLE_KEY를 추가. 서비스 역할 키는 Railway 서버 환경변수에만 저장하고 GitHub/브라우저에 절대 업로드하지 마세요.
+4. 기존 관리자 계정으로 로그인 후 admin-intakes.html > 회원 관리 선택.
 
-1. 다섯 파일을 GitHub 저장소 최상위에 업로드합니다. 기존 index.html, 관리자, 배너 관련 파일은 수정하지 않습니다.
-2. 기존 config.js가 있어야 합니다. 이 ZIP에는 공개 키를 포함하지 않았습니다.
-3. Supabase Authentication > Providers > Email에서 이메일 가입 및 확인 정책을 확인합니다.
-4. Supabase Authentication > URL Configuration에서 Site URL=https://www.homefilm.co.kr 및 Redirect URLs에 https://www.homefilm.co.kr/login.html, https://www.homefilm.co.kr/mypage.html 을 등록합니다. 비-www 도메인에서 사용할 경우 해당 URL도 등록합니다.
-5. https://www.homefilm.co.kr/signup.html 에서 테스트 회원으로 가입·이메일 확인·로그인·로그아웃을 검증합니다.
-6. 기존 견적 문의는 아직 회원 전용으로 변경하지 않았습니다. Railway API 인증 검증과 DB 회원 소유권 정책을 별도 구현 후 연결해야 합니다.
-7. 현재 mypage.html은 로그인 상태 확인만 수행합니다. 상담 이력 기능은 미구현입니다.
-8. 실제 운영 전에 개인정보처리방침, 회원 탈퇴/삭제 정책, 비밀번호 복구 완성 및 이메일 템플릿을 점검하세요.
-
-주의: 이메일 인증 및 비밀번호 재설정은 Supabase Auth 설정에 의존합니다. 재설정 링크로 이동한 뒤 새 비밀번호를 입력하는 화면은 후속 단계에서 구현해야 합니다.
+보안: 기존 API adminAuth가 인증된 관리자 이메일을 검증한 뒤에만 회원 목록을 반환합니다. 회원 삭제/비밀번호 변경 기능은 제공하지 않습니다.
+주의: 현재 운영 Railway 서버 파일이 업로드된 ZIP보다 최신일 수 있으므로 전체 덮어쓰기 전에 비교가 필요합니다. 서버에 실제 배포/연동 검증은 하지 않았습니다.

@@ -60,6 +60,24 @@ async function adminAuth(req,res,next){
   next();
  }catch(e){console.error('admin_auth_unavailable',e?.name||'error');res.status(503).json({ok:false,code:'AUTH_UNAVAILABLE'});}
 }
+
+// Admin-only member listing. Service-role credentials stay on Railway, never in browser.
+app.get('/api/admin/members',adminAuth,async(req,res)=>{
+ const base=(process.env.SUPABASE_URL||'').replace(//$/,'');
+ const secret=process.env.SUPABASE_SERVICE_ROLE_KEY;
+ if(!/^https://[^/]+\.supabase\.co$/.test(base)||!secret)return res.status(503).json({ok:false,code:'MEMBERS_NOT_CONFIGURED'});
+ try{
+  const page=Math.max(1,Math.min(10000,Number.parseInt(String(req.query.page||'1'),10)||1));
+  const response=await fetch(base+'/auth/v1/admin/users?per_page=50&page='+page,{
+   headers:{apikey:secret,Authorization:'Bearer '+secret},signal:AbortSignal.timeout(10000)
+  });
+  if(!response.ok){console.error('members_upstream',response.status);return res.status(503).json({ok:false,code:'MEMBERS_UPSTREAM_ERROR'});}
+  const data=await response.json();
+  const users=Array.isArray(data.users)?data.users:[];
+  res.setHeader('Cache-Control','no-store');
+  return res.json({ok:true,page,items:users.map(u=>({id:u.id,email:u.email||'',created_at:u.created_at||null,last_sign_in_at:u.last_sign_in_at||null,email_confirmed_at:u.email_confirmed_at||null,banned_until:u.banned_until||null})),nextPage:users.length===50?page+1:null});
+ }catch(e){console.error('members_list_unavailable',e?.name||'error');return res.status(503).json({ok:false,code:'MEMBERS_UNAVAILABLE'});}
+});
 app.get('/api/admin/intakes',adminAuth,async(req,res)=>{try{const [rows]=await pool.query('SELECT id,kind,author,title,body,phone,status,created_at FROM intakes ORDER BY created_at DESC LIMIT 100');res.json({ok:true,items:rows});}catch{res.status(503).json({ok:false});}});
 app.patch('/api/admin/intakes/:id',adminAuth,async(req,res)=>{const status=req.body?.status;if(!['new','in_progress','closed'].includes(status))return res.status(400).json({ok:false});try{const [r]=await pool.execute('UPDATE intakes SET status=? WHERE id=?',[status,req.params.id]);res.json({ok:r.affectedRows>0});}catch{res.status(503).json({ok:false});}});
 
