@@ -11,6 +11,8 @@ try{
 const {data,error}=await db.from('home_content').select('section,position,title,body,image_url').eq('published',true).order('position',{ascending:true});
 if(error)throw error;
 const rows=data||[];
+window.HOMEFILM_CONTENT_ROWS=rows;
+window.dispatchEvent(new CustomEvent('homefilm:content-ready',{detail:rows}));
 const single=(key)=>rows.find(r=>r.section===key);
 let x=single('hero');if(x){
  const heroRows=rows.filter(r=>r.section==='hero').sort((a,b)=>a.position-b.position);
@@ -28,5 +30,5 @@ const cards=(section,track,cls,headerTag)=>{
 cards('service',$('#serviceTrack'),'service-card','h3');
 cards('work',$('#sampleWorks'),'work-card','strong');
 if(rows.some(r=>r.section==='work')){const n=$('#sampleNotice');if(n)n.textContent='※ 사진과 설명은 등록된 콘텐츠를 기준으로 표시됩니다.';}
-}catch(e){console.warn('HOME FILM content: existing content preserved',e.message);}
+}catch(e){window.HOMEFILM_CONTENT_ERROR=String(e.message||e);window.dispatchEvent(new CustomEvent('homefilm:content-error',{detail:window.HOMEFILM_CONTENT_ERROR}));console.warn('HOME FILM content: existing content preserved',e.message);}
 }
