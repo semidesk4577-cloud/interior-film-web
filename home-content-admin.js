@@ -2,6 +2,7 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 const cfg=window.HOMEFILM_CONFIG||{},$=id=>document.getElementById(id),say=t=>$('msg').textContent=t;
 const db=createClient(cfg.supabaseUrl,cfg.supabasePublishableKey);
+const status=(message,type='')=>{const el=$('saveStatus');if(el){el.textContent=message;el.dataset.error=String(type==='error');el.dataset.success=String(type==='success');}say(message);};
 let rows=[],current=null;
 const sections={hero:'메인 배너',about:'브랜드 소개',service:'시공 서비스',work:'시공 갤러리'};
 const imgOk=u=>!u||(/^https:\/\//.test(u)&&u.length<=1500);
@@ -49,9 +50,11 @@ $('remove').addEventListener('click',async()=>{
 });
 $('form').addEventListener('submit',async e=>{
  e.preventDefault();
- const btn=$('save');btn.disabled=true;
+ const btn=$('save');if(btn.disabled)return;btn.disabled=true;btn.textContent='저장 중…';status('저장을 시작합니다.');
  try{
   const section=$('section').value;
+  if(!$('title').value.trim())throw Error('제목을 입력하세요.');
+  if(!$('position').value||Number($('position').value)<1||Number($('position').value)>999)throw Error('표시 순서를 1~999 사이로 입력하세요.');
   if(section==='about'&&!current&&rows.some(r=>r.section==='about'))throw Error('브랜드 소개는 1개만 등록할 수 있습니다. 기존 항목을 선택해 수정하세요.');
   let image_url=$('imageUrl').value.trim();
   if(!imgOk(image_url))throw Error('이미지 주소는 https:// 로 시작해야 합니다.');
@@ -60,16 +63,18 @@ $('form').addEventListener('submit',async e=>{
    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024)throw Error('JPEG/PNG/WEBP 5MB 이하만 업로드할 수 있습니다.');
    const ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'}[file.type];
    const path='home-content/'+crypto.randomUUID()+'.'+ext;
+   status('사진 업로드 중입니다…');
    const {error}=await db.storage.from('film-gallery').upload(path,file,{contentType:file.type,upsert:false});
    if(error)throw Error('이미지 업로드 실패: '+error.message);
    image_url=db.storage.from('film-gallery').getPublicUrl(path).data.publicUrl;
   }
   const payload={section,position:Number($('position').value),title:$('title').value.trim(),body:$('body').value.trim(),image_url:image_url||null,published:$('published').checked};
   if(!payload.title||payload.position<1||payload.position>999)throw Error('제목과 표시 순서를 확인하세요.');
+  status('콘텐츠 저장 중입니다…');
   const query=current?db.from('home_content').update(payload).eq('id',current):db.from('home_content').insert(payload);
   const {error}=await query;if(error)throw Error('저장 실패: '+error.message);
-  current=null;await load();say('저장되었습니다. 홈페이지에서 새로고침하여 확인하세요.');
- }catch(err){say(err.message);}finally{btn.disabled=false;}
+  current=null;await load();status('저장 완료! 홈페이지에서 새로고침하여 확인하세요.','success');
+ }catch(err){status('저장 실패: '+(err?.message||String(err)),'error');}finally{btn.disabled=false;btn.textContent='저장';}
 });
 async function init(){
  try{
