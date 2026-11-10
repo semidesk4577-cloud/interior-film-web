@@ -32,7 +32,7 @@ button[type=submit]{min-width:155px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .tile{background:#fafbfc;border:1px solid #e1e5ea;border-radius:12px;padding:18px;margin:13px 0;display:flex;gap:13px;align-items:center;flex-wrap:wrap}
 .tile strong{flex:1;min-width:180px}
-.tile button{background:#fff;color:#a13d3d;border:1px solid #dcbdbd;padding:8px 13px}
+.tile button{background:#fff;color:#414b57;border:1px solid #b6bec7;padding:8px 13px}
 .tile img{width:100%;height:190px;object-fit:cover;border-radius:8px}
 .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.bar>*{flex:1}
 #msg{white-space:pre-wrap;color:#4f6574;background:#e9edf1;border:1px solid #d9e0e6;border-radius:9px;padding:11px 15px;margin:15px 0 23px}
@@ -41,6 +41,40 @@ button[type=submit]{min-width:155px}
 [hidden]{display:none!important}
 @media(max-width:850px){.shell{grid-template-columns:1fr}aside{flex-direction:row;overflow-x:auto;padding:10px;gap:4px}aside .aside-title{display:none}aside a{white-space:nowrap;padding:10px;font-size:13px}main{padding:25px 16px}header{padding:15px 18px}}
 @media(max-width:580px){h1{font-size:25px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}section{padding:18px}.tile{align-items:flex-start}header b{font-size:21px}header span{font-size:11px}}
+
+/* STEP29 - Consistent gray navigation across every administrator page */
+html,body{background-color:#f2f4f6!important;color:#29313b}
+header,.top{background:#303842!important;background-image:none!important;color:#fff!important}
+.sidebar,aside[aria-label="관리자 메뉴"]{background:#39434f!important;background-image:none!important;color:#f1f4f7!important}
+.sidebar-brand,.sidebar-brand strong,.sidebar-brand small,.house-mark,.sidebar-foot{color:#e7edf3!important}
+.side-links a,aside[aria-label="관리자 메뉴"] a{color:#e7edf3!important}
+.side-links a.selected,aside[aria-label="관리자 메뉴"] a.active{background:#e5e9ee!important;color:#303842!important}
+.side-links a:hover,aside[aria-label="관리자 메뉴"] a:hover{background:#596573!important;color:#fff!important}
+.side-links a.selected:hover,aside[aria-label="관리자 메뉴"] a.active:hover{background:#dce2e8!important;color:#303842!important}
+.top-nav a{color:#f1f4f7!important}
+
+/* STEP30 COMPLETE GRAY: all inner panels, forms, tabs and content */
+:root{color-scheme:light;--ink:#29313b;--brown:#485562;--copper:#65717e;--line:#dce2e8;--cream:#f2f4f6;--muted:#6d7783;--bg:#f2f4f6;--panel:#fff;--dark:#303842;--accent:#4e5967}
+html,body{background:#f2f4f6!important;color:#29313b!important}
+header,.top{background:#303842!important;background-image:none!important;color:#fff!important}
+.sidebar,aside[aria-label="관리자 메뉴"]{background:#39434f!important;background-image:none!important;color:#f1f4f7!important}
+.sidebar-brand,.sidebar-brand strong,.sidebar-brand small,.house-mark,.sidebar-foot{color:#e7edf3!important}
+.side-links a,aside[aria-label="관리자 메뉴"] a{color:#e7edf3!important}
+.side-links a.selected,aside[aria-label="관리자 메뉴"] a.active{background:#e5e9ee!important;color:#303842!important}
+.side-links a:hover,aside[aria-label="관리자 메뉴"] a:hover{background:#596573!important;color:#fff!important}
+.side-links a.selected:hover,aside[aria-label="관리자 메뉴"] a.active:hover{background:#dce2e8!important;color:#303842!important}
+.top-nav a{color:#f1f4f7!important}
+main,.layout{color:#29313b}
+section,.panel,.ticket,.stat-card,.stat,.login,.tile{border-color:#dce2e8!important}
+input:not([type="checkbox"]),select,textarea{background:#fff!important;color:#29313b!important;border-color:#cdd5de!important}
+input:focus,textarea:focus,select:focus{outline-color:#8b98a6!important}
+button,.btn.primary,.save-button,#logout{border-radius:9px}
+button[type="submit"],.btn.primary,.save-button,#logout,.more{background:#485562!important;color:#fff!important;border-color:#485562!important}
+button[type="submit"]:hover,.btn.primary:hover,.save-button:hover,#logout:hover,.more:hover{background:#303842!important}
+.category-tabs .tab.active{background:#586574!important;border-color:#586574!important;color:#fff!important}
+.category-tabs .tab:not(.active){background:#f3f5f7!important;color:#485562!important;border-color:#dce2e8!important}
+.toolbar,.ticket-body,.approval{border-color:#dce2e8!important}
+.type-tag,.state-tag{border-radius:100px}
 </style><header><div><b>HOME FILM</b><span>관리자 · 콘텐츠 관리</span></div><span>ADMIN CONSOLE</span></header>
 <div class="shell"><aside aria-label="관리자 메뉴"><div class="aside-title">MANAGEMENT</div>
 <a href="admin.html">⌂　관리자 홈</a>
