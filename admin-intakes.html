@@ -196,4 +196,46 @@ el('filter').onchange=render;el('stateFilter').onchange=render;el('search').onin
 // Export only explicitly loaded records; prevent spreadsheet formula injection.
 function safeCsv(v){let s=String(v??'').replace(/^[\s\uFEFF]*[=+@-]/u,m=>"'"+m);return '"'+s.replace(/"/g,'""')+'"';}
 el('export').onclick=()=>{if(!cached.length){status.textContent='먼저 목록을 불러오세요.';return;}const filter=el('filter').value,stateFilter=el('stateFilter').value,term=el('search').value.trim().toLocaleLowerCase();const rows=cached.filter(x=>(filter==='all'||x.kind===filter)&&(stateFilter==='all'||x.status===stateFilter)&&(!term||[x.author,x.title,x.body,x.phone].some(v=>String(v||'').toLocaleLowerCase().includes(term))));if(!rows.length){status.textContent='내보낼 항목이 없습니다.';return;}const head=['접수일','구분','작성자','제목','내용','연락처','상태','답변','공개승인'];const body=rows.map(x=>[x.created_at,x.kind==='question'?'질문':'시공 상담',x.author,x.title,x.body,x.phone,({new:'신규',in_progress:'진행 중',closed:'완료'})[x.status]||x.status,x.answer,x.published?'예':'아니오']);const csv='\uFEFF'+[head,...body].map(r=>r.map(safeCsv).join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='HOMEFILM_INTAKES_'+new Date().toISOString().slice(0,10)+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent=rows.length+'건을 CSV로 저장했습니다. 개인정보 파일은 안전하게 보관하세요.';};
-</script></body></html>
+</script>
+<script id="hf-unified-admin-navigation">
+(function(){
+  const sidebar=document.querySelector('.hf-side');
+  const content=document.querySelector('.app-shell > .layout');
+  if(!sidebar||!content)return;
+  const links=[...sidebar.querySelectorAll('a[href]')];
+  const originalDisplay=content.style.display;
+  const frame=document.createElement('iframe');
+  frame.id='hf-admin-content-frame';
+  frame.title='관리자 메뉴 콘텐츠';
+  frame.setAttribute('loading','eager');
+  frame.style.cssText='display:none;width:100%;height:calc(100vh - 75px);min-height:700px;border:0;background:#f6f7f9;';
+  content.insertAdjacentElement('afterend',frame);
+  function active(link){
+    links.forEach(a=>{a.classList.toggle('is-current',a===link);if(a===link)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  }
+  links.forEach(link=>{
+    const href=link.getAttribute('href')||'';
+    // Public website preview links still open in a separate tab, never inside admin console.
+    if(['index.html','gallery.html','questions.html'].includes(href)){
+      link.target='_blank';link.rel='noopener noreferrer';return;
+    }
+    if(!['admin.html','admin-intakes.html','content-admin.html','admin-members.html','home-content-admin.html'].includes(href))return;
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      active(link);
+      if(href==='admin-intakes.html'){
+        frame.style.display='none';frame.removeAttribute('src');content.style.display=originalDisplay;
+        history.replaceState(null,'','admin-intakes.html');return;
+      }
+      content.style.display='none';
+      frame.style.display='block';
+      frame.src=href;
+      history.replaceState(null,'','admin-intakes.html#'+href);
+    });
+  });
+  const requested=decodeURIComponent(location.hash.slice(1));
+  const match=links.find(a=>a.getAttribute('href')===requested);
+  if(match)match.click();
+})();
+</script>
+</body></html>
