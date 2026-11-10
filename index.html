@@ -14,7 +14,7 @@
 
 /* STEP33 - expandable service carousel; retains all existing service images */
 .service-carousel{position:relative}
-.service-carousel .service-grid{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px 0 8px}
+.service-carousel .service-grid{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:none;scroll-behavior:smooth;scrollbar-width:none;padding:2px 0 8px}
 .service-carousel .service-grid::-webkit-scrollbar{display:none}
 .service-carousel .service-card{flex:0 0 calc((100% - 60px)/4);min-width:0;scroll-snap-align:start}
 .service-carousel .service-arrow{position:absolute;top:42%;transform:translateY(-50%);z-index:3;width:46px;height:56px;border:1px solid #e0d8ce;background:#fffefb;color:#473e35;font-size:39px;line-height:1;border-radius:11px;box-shadow:0 4px 20px #0002;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -80,28 +80,7 @@
 const toggle=document.getElementById('menuToggle'),links=document.getElementById('navlinks');toggle.addEventListener('click',()=>{const open=links.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');toggle.textContent=open?'×':'☰'});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'}));document.getElementById('year').textContent=new Date().getFullYear();
 
 </script>
-<script>
-(function(){
-const track=document.getElementById('serviceTrack');
-if(!track)return;
-const prev=document.querySelector('.service-prev'),next=document.querySelector('.service-next');
-const hint=document.getElementById('serviceHint');
-function step(){const first=track.querySelector('.service-card');if(!first)return track.clientWidth;const gap=parseFloat(getComputedStyle(track).gap)||0;return first.getBoundingClientRect().width+gap}
-function update(){
-const count=track.querySelectorAll('.service-card').length;
-const max=track.scrollWidth-track.clientWidth;
-prev.disabled=track.scrollLeft<=2;
-next.disabled=track.scrollLeft>=max-2;
-hint.textContent=count+'개 시공 항목 · 화살표 또는 좌우 스와이프로 이동';
-}
-prev.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
-next.addEventListener('click',()=>track.scrollBy({left:step(),behavior:'smooth'}));
-track.addEventListener('scroll',update,{passive:true});
-window.addEventListener('resize',update);
-new MutationObserver(update).observe(track,{childList:true});
-requestAnimationFrame(update);
-})();
-</script>
+<script src="service-carousel.js" defer></script>
 <script src="config.js"></script>
 <script src="site.js" defer></script>
 <script src="gallery-carousel.js" defer></script>
