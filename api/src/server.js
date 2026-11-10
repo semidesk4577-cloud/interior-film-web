@@ -63,9 +63,9 @@ async function adminAuth(req,res,next){
 
 // Admin-only member listing. Service-role credentials stay on Railway, never in browser.
 app.get('/api/admin/members',adminAuth,async(req,res)=>{
- const base=(process.env.SUPABASE_URL||'').replace(//$/,'');
+ const base=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
  const secret=process.env.SUPABASE_SERVICE_ROLE_KEY;
- if(!/^https://[^/]+\.supabase\.co$/.test(base)||!secret)return res.status(503).json({ok:false,code:'MEMBERS_NOT_CONFIGURED'});
+ if(!/^https:\/\/[^/]+\.supabase\.co$/.test(base)||!secret)return res.status(503).json({ok:false,code:'MEMBERS_NOT_CONFIGURED'});
  try{
   const page=Math.max(1,Math.min(10000,Number.parseInt(String(req.query.page||'1'),10)||1));
   const response=await fetch(base+'/auth/v1/admin/users?per_page=50&page='+page,{
