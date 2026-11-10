@@ -210,6 +210,35 @@ el('export').onclick=()=>{if(!cached.length){status.textContent='먼저 목록�
   frame.setAttribute('loading','eager');
   frame.style.cssText='display:none;width:100%;height:calc(100vh - 75px);min-height:700px;border:0;background:#f6f7f9;';
   content.insertAdjacentElement('afterend',frame);
+  // Embedded pages are same-origin: hide their own navigation and header.
+  frame.addEventListener('load',()=>{
+    try{
+      const doc=frame.contentDocument;
+      if(!doc)return;
+      const style=doc.createElement('style');
+      style.textContent=`
+        body > header, body > .top, body > .header,
+        .app-shell > aside, .layout > aside,
+        .app-shell > .hf-side, .app-shell > .sidebar,
+        .layout > .hf-side, .layout > .sidebar,
+        aside[aria-label="관리자 메뉴"]{display:none!important}
+        .app-shell,.layout{grid-template-columns:minmax(0,1fr)!important;min-height:0!important}
+        body{margin:0!important;overflow-x:hidden!important}
+        main{max-width:100%!important}
+      `;
+      doc.head.appendChild(style);
+      const resize=()=>{
+        const height=Math.max(doc.documentElement.scrollHeight,doc.body?.scrollHeight||0,700);
+        frame.style.height=Math.min(height+24,20000)+'px';
+      };
+      resize();
+      if(frame._hfResizeObserver)frame._hfResizeObserver.disconnect();
+      if(typeof ResizeObserver!=='undefined'){
+        frame._hfResizeObserver=new ResizeObserver(resize);
+        frame._hfResizeObserver.observe(doc.body);
+      }
+    }catch(err){console.warn('관리자 콘텐츠 표시 조정 실패:',err)}
+  });
   function active(link){
     links.forEach(a=>{a.classList.toggle('is-current',a===link);if(a===link)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   }
