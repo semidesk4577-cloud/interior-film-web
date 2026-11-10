@@ -61,6 +61,11 @@
 
 /* Hide hero navigation controls while keeping auto rotation enabled */
 .hero-controls{display:none!important}
+
+/* STEP44: single source of truth for hero backgrounds across mobile/desktop */
+.hero .hero-slides{display:none!important}
+.hero::before{opacity:1!important}
+.hero.hero-rotation-ready::before{opacity:1!important}
 </style>
 </head>
 <body>
@@ -103,6 +108,6 @@ const toggle=document.getElementById('menuToggle'),links=document.getElementById
 <script src="config.js"></script>
 <script src="site.js" defer></script>
 <script src="gallery-carousel.js" defer></script>
-<script src="hero-carousel.js?v=step43-20261110" defer></script>
+<script src="hero-carousel.js?v=step44-20261110" defer></script>
 <script type="module" src="home-content.js"></script>
 </body></html>
