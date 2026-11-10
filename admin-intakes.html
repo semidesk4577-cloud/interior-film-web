@@ -49,6 +49,52 @@ body{background:#f6f1ec;color:var(--ink);font-size:15px}
 @media(max-width:1200px){.stat-grid{grid-template-columns:repeat(3,1fr)}.layout{padding:30px 22px 55px}}
 @media(max-width:900px){.app-shell{grid-template-columns:1fr}.sidebar{padding:10px 14px;gap:0}.sidebar-brand,.sidebar-foot{display:none}.side-links{display:flex;overflow:auto;gap:5px}.side-links a{white-space:nowrap;padding:10px 12px;font-size:13px}.layout{padding:25px 16px}.top{padding:12px 17px}}
 @media(max-width:600px){.top-nav{gap:2px}.top-nav a{font-size:11px;padding:6px}.heading h1{font-size:27px}.stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat-card{padding:13px 10px;min-height:96px}.stat-card small{font-size:11px}.stat-number{font-size:27px}.panel{padding:16px 12px}.panel h2{font-size:21px}.category-tabs .tab{padding:10px 11px;font-size:12px}.toolbar{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px}.toolbar .search-wrap{grid-column:1/-1}.ticket-summary{padding:15px 12px}.ticket-side{gap:7px}.more{padding:7px 8px}.layout{padding:22px 12px}}
+
+/* STEP26: coordinated neutral-gray theme. Layout and JS unchanged. */
+:root{--ink:#29313b;--brown:#48525e;--copper:#65717e;--line:#dce2e8;--cream:#f2f4f6;--muted:#6d7783}
+html{background:#f2f4f6}
+body{background:#f2f4f6;color:#29313b}
+.top{background:#303842;box-shadow:0 2px 12px #26313c1b}
+.top small{color:#cbd2da}.top-nav a{color:#edf0f4}
+.sidebar{background:linear-gradient(170deg,#39434f,#29313b);color:#f3f5f7}
+.sidebar-brand{border-bottom-color:#ffffff24}.sidebar-brand small{color:#cbd3dc}
+.house-mark{color:#d9e0e7}
+.side-links a{color:#e4e9ee}.side-links a.selected{background:#e5e9ee;color:#303842;box-shadow:0 6px 20px #17202b25}
+.side-links a:hover{background:#ffffff19}.side-links a.selected:hover{background:#dce2e8}
+.sidebar-foot{color:#b5bec9}
+.eyebrow{color:#687686}.title-dot{color:#7d8995}
+.muted,.summary-line,.ticket-by,.footer{color:#73808d}
+.btn{border-color:#cfd6de;background:#fff;color:#38424d}
+.btn.primary,#logout,.ticket-body .save-button{background:#414b57;color:#fff;border-color:#414b57}
+#status{color:#526577}
+.stat-card{background:#fff;border-color:#dfe4ea;box-shadow:0 6px 18px #2937470b}
+.stat-card:first-child{background:linear-gradient(140deg,#485461,#697787);border-color:#5c6977;color:#fff}
+.stat-card:first-child small{color:#e6ebf0}
+.stat-card:nth-child(4){background:#edf2f7}
+.stat-card:nth-child(6){background:#edf3ef}
+.stat-card small{color:#697582}
+.panel{background:#fff;border-color:#dce2e8;box-shadow:0 10px 32px #2937470e}
+.category-tabs{border-bottom-color:#dce2e8}
+.category-tabs .tab{background:#f3f5f7;border-color:#d9e0e7;color:#4a5866}
+.category-tabs .tab.active{background:#586574;color:#fff;border-color:#586574}
+.toolbar{background:#f5f7f9;border-color:#e1e6ec}
+.toolbar label{color:#596675}
+.toolbar select,.toolbar input{background:#fff;border-color:#cdd5de;color:#29313b}
+.ticket{background:#fff;border-color:#dce2e8;box-shadow:0 3px 10px #2937470a}
+.ticket-summary:hover{background:#f5f7f9}
+.ticket-title{color:#29313b}
+.type-tag.question{background:#e8eef5;color:#4c617b}
+.type-tag.consultation{background:#eceff2;color:#52606d}
+.state-tag.new{background:#e8eef5;color:#435e7d}
+.state-tag.in_progress{background:#e5f0fa;color:#3b6388}
+.state-tag.closed{background:#e4f1e8;color:#356b4c}
+.more,.ticket-body button{background:#485562;color:#fff}
+.ticket-body{background:#f9fafb;border-top-color:#e1e6eb}
+.ticket-body select,.ticket-body textarea{background:#fff;border-color:#cdd5de;color:#29313b}
+.ticket-content{background:#fff;border-color:#dce2e8}
+.field-label{color:#4c5966}
+.approval{background:#edf1f5;border-color:#d8dfe7;color:#3d4955}
+.approval input{accent-color:#566575}
 </style></head><body>
 <header class="top"><div><div class="brand">HOME FILM</div><small>ADMIN CONSOLE</small></div><nav class="top-nav"><a href="admin.html">관리자 홈</a><a href="content-admin.html">시공 사진</a><a href="index.html">홈페이지</a></nav></header>
 <div class="app-shell"><aside class="sidebar" aria-label="관리자 메뉴">
