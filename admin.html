@@ -1,6 +1,44 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HOME FILM | 관리자 대시보드</title><style>
 :root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f6f3ef;color:#302b26;font:14px/1.6 system-ui,'Noto Sans KR',sans-serif}header{background:#322c26;color:#fff;padding:19px max(20px,calc((100vw - 1200px)/2))}header strong{font:700 24px Georgia,serif;letter-spacing:.07em}header span{margin-left:14px;color:#d6c8b7}main{max-width:1200px;margin:28px auto;padding:0 20px}section{background:white;border:1px solid #e3dbd2;border-radius:7px;padding:24px;margin-bottom:20px}h1{font-size:23px;margin:0 0 8px}h2{font-size:18px;margin:0 0 18px}p{margin:8px 0 15px}.muted{color:#736d66}input,select,button{font:inherit;padding:10px 12px;border:1px solid #c7bcb0;border-radius:4px}input{max-width:100%}button{background:#332d27;color:#fff;cursor:pointer}button.secondary{background:#fff;color:#332d27}button:disabled{opacity:.5;cursor:wait}label{display:block;margin:10px 0}.login{max-width:520px;margin:55px auto;padding:36px 38px;box-shadow:0 14px 38px rgba(46,37,28,.07);border-radius:12px}.login h1{font-size:25px;letter-spacing:-.04em}.login .muted{font-size:13px}.login button[type=submit]{width:100%;margin-top:13px;padding:13px}.login input{border-radius:6px;background:#fcfaf7;padding:12px 14px}.login input:focus{outline:2px solid #b8a58e;outline-offset:1px}.linkbtn{background:none;border:0;color:#73583f;text-decoration:underline;padding:7px 0;cursor:pointer}.brandmark{display:block;color:#ae9477;font-size:11px;letter-spacing:.22em;font-weight:700;margin-bottom:7px}.helpnote{font-size:12px;color:#776e65;margin:12px 0 0}.login[hidden],#resetSection[hidden]{display:none!important}.login input{display:block;width:100%;margin-top:5px}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:15px 0}.toolbar input{min-width:220px;flex:1}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat{background:#fff;border:1px solid #e3dbd2;border-radius:7px;padding:18px}.stat b{display:block;font-size:28px}.stat small{color:#6e665e}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:880px}td,th{text-align:left;vertical-align:top;padding:12px 10px;border-bottom:1px solid #ece6e0}th{background:#f8f5f1;white-space:nowrap}td:nth-child(5){min-width:190px;white-space:pre-wrap;overflow-wrap:anywhere}td select{width:130px}#msg{color:#805234;white-space:pre-wrap}a{color:inherit}footer{padding:12px 0 30px}#dashboard[hidden],#loginSection[hidden]{display:none!important}@media(max-width:700px){.login{padding:25px 20px;margin:24px auto}header{padding:15px 20px}.stats,.stats[style]{grid-template-columns:repeat(2,minmax(0,1fr))!important}section{padding:16px}.toolbar input{min-width:100%}}
-</style></head><body><header><strong>HOME FILM</strong><span>관리자 대시보드</span></header><main><section id="loginSection" class="login"><span class="brandmark">HOME FILM · ADMIN</span><h1>관리자 로그인</h1><p class="muted">승인된 관리자 계정으로 로그인하세요.</p><form id="loginForm"><label>이메일<input id="email" type="email" autocomplete="username" required></label><label>비밀번호<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">관리자 로그인</button></form><button id="forgotBtn" class="linkbtn" type="button">비밀번호를 잊으셨나요?</button><p class="helpnote">재설정 메일이 오지 않으면 아래 오류 안내를 확인하세요. 비밀번호는 절대 공유하지 마세요.</p></section><section id="resetSection" class="login" hidden><span class="brandmark">HOME FILM · ACCOUNT</span><h1>새 비밀번호 설정</h1><p class="muted">메일의 재설정 링크로 들어오셨다면 새 비밀번호를 입력하세요.</p><form id="resetForm"><label>새 비밀번호<input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></label><label>새 비밀번호 확인<input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></label><button type="submit">비밀번호 변경하기</button></form><button id="backToLogin" class="linkbtn" type="button">로그인 화면으로 돌아가기</button></section><div id="dashboard" hidden>
+
+/* STEP27: Unified neutral gray admin theme */
+:root{--gray-950:#29313b;--gray-850:#303842;--gray-700:#485562;--gray-500:#73808d;--gray-200:#dce2e8;--gray-100:#eef1f4}
+body{background:#f2f4f6;color:#29313b;font:15px/1.6 system-ui,'Noto Sans KR',sans-serif}
+header{background:#303842;color:#fff;padding:20px max(24px,calc((100vw - 1200px)/2));box-shadow:0 2px 12px #202b3520}
+header span{color:#cbd2da}
+main{max-width:1200px}
+section{border:1px solid #dce2e8;border-radius:16px;box-shadow:0 8px 26px #2937470a}
+h1{font-size:27px;letter-spacing:-.035em}h2{font-size:20px}
+.muted,.helpnote{color:#707c88}
+input,select,button{border-radius:9px;border-color:#cdd5de}
+input{background:#fbfcfd;color:#29313b}
+input:focus,.login input:focus{outline:2px solid #8794a2;outline-offset:1px}
+button{background:#485562;color:#fff;border-color:#485562}
+button:hover{background:#35414e}
+button.secondary{background:#fff;color:#43505e;border-color:#cdd5de}
+button.secondary:hover{background:#edf1f5}
+.login{border-radius:18px;box-shadow:0 15px 40px #29374712;border-top:4px solid #647180}
+.login input{background:#f9fafb;border-radius:9px}
+.login button[type=submit]{border-radius:10px}
+.linkbtn{color:#485e73}
+.brandmark{color:#637383}
+.stat{border:1px solid #dce2e8;border-radius:14px;padding:21px;box-shadow:0 4px 16px #2937470b}
+.stat:first-child{background:linear-gradient(135deg,#485562,#687787);color:#fff}
+.stat:first-child small{color:#e8eef4}
+.stat small{color:#6e7a86;font-size:13px;font-weight:650}
+.stat b{font-size:34px;margin-top:5px}
+.stats section{border-top:4px solid #7a8795}
+#dashboard .stats section a{background:#485562!important;color:#fff!important;border-color:#485562!important;border-radius:10px!important;font-weight:650}
+#dashboard .stats section:nth-child(2) a{background:#fff!important;color:#43505e!important;border-color:#cdd5de!important}
+#msg{color:#53697c}
+th{background:#eef1f4}td,th{border-bottom-color:#dce2e8}
+footer{color:#586777}
+@media(max-width:700px){header{padding:15px 20px}.login{margin:24px auto;padding:25px 20px}.stat{padding:14px}.stat b{font-size:28px}}
+</style></head><body><header><strong>HOME FILM</strong><span>관리자 대시보드</span></header><main><section id="loginSection" class="login"><span class="brandmark">HOME FILM · ADMIN</span><h1>관리자 로그인</h1><p class="muted">승인된 관리자 계정으로 로그인하세요.</p><form id="loginForm"><label>이메일<input id="email" type="email" autocomplete="username" required></label><label>비밀번호<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">관리자 로그인</button></form><button id="forgotBtn" class="linkbtn" type="button">비밀번호를 잊으셨나요?</button><p class="helpnote">재설정 메일이 오지 않으면 아래 오류 안내를 확인하세요. 비밀번호는 절대 공유하지 마세요.</p></section><section id="resetSection" class="login" hidden><span class="brandmark">HOME FILM · ACCOUNT</span><h1>새 비밀번호 설정</h1><p class="muted">메일의 재설정 링크로 들어오셨다면 새 비밀번호를 입력하세요.</p><form id="resetForm"><label>새 비밀번호<input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></label><label>새 비밀번호 확인<input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></label><button type="submit">비밀번호 변경하기</button></form><button id="backToLogin" class="linkbtn" type="button">로그인 화면으로 돌아가기</button></section><div id="dashboard" hidden><nav class="admin-shortcuts" aria-label="관리자 바로가기" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px">
+<a href="admin-intakes.html" style="padding:11px 15px;border-radius:10px;background:#485562;color:#fff;text-decoration:none;font-weight:650">질문·상담 관리</a>
+<a href="content-admin.html" style="padding:11px 15px;border-radius:10px;background:#fff;border:1px solid #cdd5de;color:#43505e;text-decoration:none;font-weight:650">시공 사진 관리</a>
+<a href="index.html" style="padding:11px 15px;border-radius:10px;background:#fff;border:1px solid #cdd5de;color:#43505e;text-decoration:none;font-weight:650">홈페이지 보기</a>
+</nav>
  <div class="toolbar"><h1 style="margin-right:auto">관리자 대시보드</h1><button id="refresh" class="secondary" type="button">현황 새로고침</button><button id="logout" type="button">로그아웃</button></div>
  <p class="muted">질문과 시공 상담은 Railway MySQL 기준으로 집계됩니다.</p>
  <div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">
