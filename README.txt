@@ -1,5 +1,5 @@
-현재 업로드된 GitHub 전체 소스를 기준으로 만든 최소 수정본입니다.
-마이페이지는 mypage.html 별도 한 페이지로 유지합니다.
-로그인 성공/마이페이지 로그아웃 시 메인 홈페이지로 이동하도록 member.js를 수정했습니다.
-업로드: login.html, mypage.html, member.js (루트에 덮어쓰기)
-질문 목록 HTTP 503은 서버 문제로 이 패치에 포함되지 않습니다.
+HOME FILM 관리자 로그인 및 상단 메뉴 통합 수정
+GitHub Pages 최상위: index.html, login.html, member.js, member-nav.js 덮어쓰기
+관리자 권한: Supabase admin_users(user_id) 확인. RLS에서 본인 관리자 행 조회 허용 필요.
+관리자 로그인 후 admin-intakes.html / 일반 회원 로그인 후 메인.
+기존 메인 디자인과 Railway 파일은 수정하지 않음.
