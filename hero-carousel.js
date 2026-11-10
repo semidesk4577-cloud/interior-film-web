@@ -1,9 +1,10 @@
-/* HOME FILM STEP44: use the EXISTING .hero::before background on all screens.
+/* HOME FILM STEP45: use the EXISTING .hero::before background on all screens.
    Avoid separate overlay layers and Image.onload gating. Public Supabase data only. */
 (()=>{'use strict';
 const hero=document.querySelector('.hero');if(!hero)return;
 const title=hero.querySelector('h1'),body=hero.querySelector('.hero-content p');
 const count=hero.querySelector('.hero-count');
+const mobilePhoto=hero.querySelector('.hero-mobile-photo');
 const cfg=window.HOMEFILM_CONFIG||{};
 let items=[],index=0,loading=false,ready=false,paused=false;
 const normalize=rows=>(Array.isArray(rows)?rows:[])
@@ -16,6 +17,7 @@ function show(n){
  const r=items[index],url=String(r.image_url);
  // CSS :before is the visible banner on mobile AND desktop.
  hero.style.setProperty('--home-hero-image','url('+JSON.stringify(url)+')');
+ if(mobilePhoto && mobilePhoto.getAttribute('src')!==url)mobilePhoto.setAttribute('src',url);
  if(title)title.textContent=r.title||'';
  if(body)body.textContent=r.body||'';
  if(count)count.textContent=(index+1)+' / '+items.length;
@@ -40,7 +42,7 @@ async function refresh(){
   const res=await fetch(url,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'});
   if(!res.ok)throw Error('HTTP '+res.status);
   setRows(await res.json());
- }catch(e){console.warn('[HOME FILM STEP44] 배너 목록 조회 실패:',e.message);}
+ }catch(e){console.warn('[HOME FILM STEP45] 배너 목록 조회 실패:',e.message);}
  finally{loading=false;}
 }
 // Existing buttons remain hidden; preserve optional functionality.
@@ -48,7 +50,7 @@ hero.querySelector('.hero-prev')?.addEventListener('click',()=>show(index-1));
 hero.querySelector('.hero-next')?.addEventListener('click',()=>show(index+1));
 hero.querySelector('.hero-toggle')?.addEventListener('click',()=>{paused=!paused;});
 // Timer does not depend on focus/hover/mobile reduced-motion or image load events.
-window.setInterval(()=>{if(!document.hidden&&!paused&&items.length>1)show(index+1);},5000);
+window.setInterval(()=>{if(!paused&&items.length>1)show(index+1);},5000);
 refresh();window.setTimeout(refresh,3000);window.setTimeout(refresh,10000);
 window.setInterval(()=>{if(items.length<2)refresh();},30000);
 })();
