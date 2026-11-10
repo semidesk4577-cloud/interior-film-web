@@ -6,7 +6,7 @@ import {randomUUID,timingSafeEqual} from 'node:crypto';
 import {origins,validate,publicRecord} from './validation.js';
 const app=express();app.disable('x-powered-by');app.set('trust proxy',1);app.use(helmet());app.use(express.json({limit:'12kb'}));
 const pool=mysql.createPool({uri:process.env.MYSQL_URL||process.env.DATABASE_URL,waitForConnections:true,connectionLimit:5,enableKeepAlive:true});
-const release='HOMEFILM-RAILWAY-A1';
+const release='HOMEFILM-MEMBER-STEP04';
 app.use((req,res,next)=>{res.setHeader('X-Homefilm-Release',release);const origin=req.get('origin');if(origin&&origins.has(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Methods','GET,POST,PATCH,OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');}if(req.method==='OPTIONS')return res.status(origin&&origins.has(origin)?204:403).end();next();});
 app.get('/health',async(req,res)=>{try{await pool.query('SELECT 1');res.json({ok:true,release});}catch{res.status(503).json({ok:false,release});}});
 const limiter=rateLimit({windowMs:15*60*1000,limit:10,standardHeaders:'draft-7',legacyHeaders:false,message:{ok:false,code:'RATE_LIMIT'}});
@@ -100,6 +100,7 @@ async function memberAuth(req,res,next){
   req.memberId=u.id;next();
  }catch(e){console.error('member_auth_error',e?.name||'error');res.status(503).json({ok:false,code:'AUTH_UNAVAILABLE'});}
 }
+app.get('/api/member/ping',memberAuth,(req,res)=>res.json({ok:true,member:true,release}));
 app.get('/api/member/questions',memberAuth,async(req,res)=>{
  try{
   const [rows]=await pool.execute('SELECT id,kind,title,body,status,answer,created_at FROM intakes WHERE member_id=? ORDER BY created_at DESC LIMIT 100',[req.memberId]);
