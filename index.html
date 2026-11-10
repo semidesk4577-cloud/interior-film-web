@@ -62,21 +62,10 @@
 /* Hide hero navigation controls while keeping auto rotation enabled */
 .hero-controls{display:none!important}
 
-/* STEP44: single source of truth for hero backgrounds across mobile/desktop */
-.hero .hero-slides{display:none!important}
-.hero::before{opacity:1!important}
-.hero.hero-rotation-ready::before{opacity:1!important}
-
-/* STEP45: On mobile use a real image instead of CSS pseudo-element backgrounds. */
-.hero-mobile-photo{display:none}
-@media(max-width:680px){
- .hero::before{opacity:1!important}
- .hero-slides{display:none!important}
- .hero-mobile-photo{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:0}
- .hero.hero-photo-loaded .hero-mobile-photo{opacity:1}
- .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(90deg,rgba(26,23,20,.75),rgba(35,31,27,.26))}
- .hero-content{position:relative;z-index:1}
-}
+/* STEP48: one background image layer on every screen, with a nonblank fallback. */
+.hero .hero-slides,.hero .hero-mobile-photo{display:none!important}
+.hero::before,.hero.hero-rotation-ready::before{opacity:1!important}
+.hero-content{position:relative;z-index:1}
 </style>
 </head>
 <body>
@@ -119,6 +108,6 @@ const toggle=document.getElementById('menuToggle'),links=document.getElementById
 <script src="config.js"></script>
 <script src="site.js" defer></script>
 <script src="gallery-carousel.js" defer></script>
-<script src="hero-carousel.js?v=step47-20261110" defer></script>
+<script src="hero-carousel.js?v=step48-20261110" defer></script>
 <script type="module" src="home-content.js?v=step47-20261110"></script>
 </body></html>
