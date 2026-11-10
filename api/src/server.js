@@ -84,6 +84,43 @@ app.patch('/api/admin/moderation/:id',adminAuth,async(req,res)=>{
   res.json({ok:true});
  }catch(e){console.error('moderation_update',e.code||'unknown');res.status(503).json({ok:false,code:'DB_ERROR'});}
 });
+
+// STEP03: member token is verified server-side; never trust client-supplied user IDs.
+async function memberAuth(req,res,next){
+ const token=(req.get('authorization')||'').match(/^Bearer\s+(.+)$/i)?.[1];
+ const base=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
+ const key=process.env.SUPABASE_PUBLISHABLE_KEY;
+ if(!token)return res.status(401).json({ok:false,code:'LOGIN_REQUIRED'});
+ if(!/^https:\/\/[^/]+\.supabase\.co$/.test(base)||!key)return res.status(503).json({ok:false,code:'MEMBER_AUTH_NOT_CONFIGURED'});
+ try{
+  const r=await fetch(base+'/auth/v1/user',{headers:{apikey:key,Authorization:'Bearer '+token},signal:AbortSignal.timeout(7000)});
+  if(!r.ok)return res.status(401).json({ok:false,code:'INVALID_SESSION'});
+  const u=await r.json();
+  if(!u?.id||!u.email_confirmed_at)return res.status(403).json({ok:false,code:'EMAIL_NOT_VERIFIED'});
+  req.memberId=u.id;next();
+ }catch(e){console.error('member_auth_error',e?.name||'error');res.status(503).json({ok:false,code:'AUTH_UNAVAILABLE'});}
+}
+app.get('/api/member/questions',memberAuth,async(req,res)=>{
+ try{
+  const [rows]=await pool.execute('SELECT id,kind,title,body,status,answer,created_at FROM intakes WHERE member_id=? ORDER BY created_at DESC LIMIT 100',[req.memberId]);
+  res.json({ok:true,items:rows});
+ }catch(e){console.error('member_questions_error',e.code||'unknown');res.status(503).json({ok:false,code:'DB_ERROR'});}
+});
+
+
+app.post('/api/member/questions',limiter,memberAuth,async(req,res)=>{
+ const id=randomUUID();
+ if(!origins.has(req.get('origin')))return res.status(403).json({ok:false,code:'ORIGIN_DENIED'});
+ const data={...req.body,type:'question'};
+ const error=validate(data);if(error)return res.status(400).json({ok:false,code:error});
+ try{
+  if(!await verify(data.turnstile_token))return res.status(403).json({ok:false,code:'VERIFICATION_FAILED'});
+  const item=publicRecord(data);
+  await pool.execute('INSERT INTO intakes (id,kind,author,title,body,phone,status,member_id) VALUES (?,?,?,?,?,?,?,?)',[id,item.type,item.author,item.title,item.body,item.phone,'new',req.memberId]);
+  res.status(201).json({ok:true,receipt:id});
+ }catch(e){console.error('member_question_error',e.code||'unknown');res.status(503).json({ok:false,code:'SERVER_ERROR'});}
+});
+
 app.get('/api/public/questions',async(req,res)=>{try{const [rows]=await pool.query("SELECT id,author,title,body,answer,created_at FROM intakes WHERE kind='question' AND published=1 ORDER BY created_at DESC LIMIT 100");res.json({ok:true,items:rows});}catch(e){console.error('public_questions',e.code||'unknown');res.status(503).json({ok:false,code:'DB_ERROR'});}});
 app.use((err,req,res,next)=>{console.error('request_error',err.type||err.name);res.status(err.status||500).json({ok:false,code:'BAD_REQUEST'});});
 const port=Number(process.env.PORT||3000);app.listen(port,'0.0.0.0',()=>console.log(`${release} listening ${port}`));
