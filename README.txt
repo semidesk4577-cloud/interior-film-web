@@ -1,1 +1,5 @@
-STEP09: 메인 홈페이지 회원 박스 제거, 상단 메뉴는 로그인 전 로그인/회원가입, 로그인 후 마이페이지/로그아웃. 기존 mypage.html, login.html, signup.html 재사용. index.html 및 member-nav.js 두 파일만 저장소 최상위에 업로드. 기존 member-hub.js는 더 이상 메인에서 로드하지 않음. 기존 배너/서비스/갤러리/관리자 파일 미수정. Railway 503 오류는 별도 미해결.
+현재 업로드된 GitHub 전체 소스를 기준으로 만든 최소 수정본입니다.
+마이페이지는 mypage.html 별도 한 페이지로 유지합니다.
+로그인 성공/마이페이지 로그아웃 시 메인 홈페이지로 이동하도록 member.js를 수정했습니다.
+업로드: login.html, mypage.html, member.js (루트에 덮어쓰기)
+질문 목록 HTTP 503은 서버 문제로 이 패치에 포함되지 않습니다.

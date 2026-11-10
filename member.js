@@ -18,8 +18,8 @@ if($('signup'))$('signup').addEventListener('submit',e=>{e.preventDefault();if(!
  });});
 if($('login'))$('login').addEventListener('submit',e=>{e.preventDefault();if(!db)return;withButton(e.currentTarget,async()=>{
  const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
- if(error)throw error;location.replace('/');
+ if(error)throw error;location.replace(new URL('./', location.href).href);
  });});
 if($('reset'))$('reset').addEventListener('click',async e=>{e.preventDefault();if(!db)return;const email=$('email').value.trim();if(!email){msg('이메일을 먼저 입력해 주세요.',true);return;}try{const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:new URL('mypage.html',location.href).href});if(error)throw error;msg('비밀번호 재설정 안내 메일을 요청했습니다.')}catch(err){msg(safeError(err),true)}});
 if($('who'))(async()=>{if(!db)return;const {data,error}=await db.auth.getUser();if(error||!data.user){location.replace('login.html');return;}$('who').textContent=`로그인 계정: ${data.user.email||'회원'}`;})();
-if($('logout'))$('logout').addEventListener('click',async()=>{if(!db)return;const {error}=await db.auth.signOut();if(error){msg(safeError(error),true);return;}location.replace('login.html')});
+if($('logout'))$('logout').addEventListener('click',async()=>{if(!db)return;const {error}=await db.auth.signOut();if(error){msg(safeError(error),true);return;}location.replace(new URL('./', location.href).href)});
